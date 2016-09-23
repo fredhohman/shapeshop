@@ -1,0 +1,22 @@
+.jumbotron {
+	background-color: #f1f1f1;
+}
+.jumbotron h1 {
+	font-size: 38px;
+}
+.thumbnail {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    border: none;
+    border-radius: none;
+}
+.thumbnail:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  border: none;
+  border-radius: none;
+}
+.error-metric {
+	text-align: center;
+}
+.error-metric:hover {
+	text-decoration: initial;
+}
