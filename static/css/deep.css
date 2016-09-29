@@ -1,5 +1,10 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	/*filter: invert(100%);*/
+}
 .jumbotron {
-	background-color: #f1f1f1;
+	color: white;
+	background-image: linear-gradient(to bottom, #2980b9 0, #3498db 100%);
 }
 .jumbotron h1 {
 	font-size: 38px;
@@ -8,15 +13,73 @@
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     border: none;
     border-radius: none;
+    padding: 6px;
 }
 .thumbnail:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   border: none;
   border-radius: none;
 }
+.thumbnail-small {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.16), 0 2px 4px rgba(0,0,0,0.23);
+    border: none;
+    border-radius: none;
+    padding: 3px;
+}
+.thumbnail-small:hover {
+  box-shadow: 0 7px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+  border: none;
+  border-radius: none;
+}
+.thumbnail-clicked {
+	background-color: #2980b9;
+}
+.thumbnail-result {
+	background-color: inherit; /*prevents result thumbnail from being clicked*/
+}
+
 .error-metric {
 	text-align: center;
 }
 .error-metric:hover {
 	text-decoration: initial;
+}
+.vspace-large {
+	height: 100px;
+}
+.vspace-medium {
+	height: 50px;
+}
+.vspace-small {
+	height: 15px;
+}
+.display-inline-block {
+	display: inline-block;
+}
+.hyperparameter {
+	font-weight: 300;
+	font-size: 20px;
+	color: #7f8c8d;
+}
+.hyperparameter-title {
+	margin-top: 0px;
+}
+.jumbotron {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.hyperparameter-wrapper {
+	border-left: solid #dddddd 1px;
+}
+hr {
+  border-top: 1px solid #dddddd;
+}
+h2 {
+	font-weight: 400;
+}
+img {
+	border: 1px solid #dddddd;
+}
+p {
+	font-size: 14px;
 }
