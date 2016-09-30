@@ -59,74 +59,91 @@ def preprocess(training_data_indicies):
     blank = np.zeros([1,28,28])
     
     num_total_training_images = len(training_data_indicies)
-    
+   
     for i in range(num_of_pictures):
+    	counter = 0
         
         # row 1
         if training_data_indicies[0%num_total_training_images] == 1:
             x_data.append(boxify_center(np.copy(blank)))
-            y_data.append(0)
+            y_data.append(counter)
+            counter = counter + 1
 
         if training_data_indicies[1%num_total_training_images] == 1:
             x_data.append(boxify_center_hollow(np.copy(blank)))
-            y_data.append(1)
+            y_data.append(counter)
+            counter = counter + 1
             
         if training_data_indicies[2%num_total_training_images] == 1:
             x_data.append(lineify_center(np.copy(blank)))
-            y_data.append(2)
+            y_data.append(counter)
+            counter = counter + 1
             
         if training_data_indicies[3%num_total_training_images] == 1:
             x_data.append(lineify_center_horizontal(np.copy(blank)))
-            y_data.append(3)
+            y_data.append(counter)
+            counter = counter + 1
             
         if training_data_indicies[4%num_total_training_images] == 1:
             x_data.append(circleify_center(np.copy(blank)))
-            y_data.append(4)
+            y_data.append(counter)
+            counter = counter + 1
                         
         if training_data_indicies[5%num_total_training_images] == 1:
             x_data.append(circleify_center_hollow(np.copy(blank)))
-            y_data.append(5)
+            y_data.append(counter)
+            counter = counter + 1
             
         if training_data_indicies[6%num_total_training_images] == 1:
             x_data.append(triangulify_center(np.copy(blank)))
-            y_data.append(6)
+            y_data.append(counter)
+            counter = counter + 1
             
         if training_data_indicies[7%num_total_training_images] == 1:
             x_data.append(triangulify_center_hollow(np.copy(blank)))
-            y_data.append(7)
+            y_data.append(counter)
+            counter = counter + 1
             
         # row 2
         if training_data_indicies[8%num_total_training_images] == 1:
             x_data.append(boxify_top_left(np.copy(blank)))
-            y_data.append(8)
+            y_data.append(counter)
+            counter = counter + 1
 
         if training_data_indicies[9%num_total_training_images] == 1:
             x_data.append(boxify_bottom_right(np.copy(blank)))
-            y_data.append(9)
+            y_data.append(counter)
+            counter = counter + 1
             
         if training_data_indicies[10%num_total_training_images] == 1:
             x_data.append(lineify_top_left(np.copy(blank)))
-            y_data.append(10)
+            y_data.append(counter)
+            counter = counter + 1
 
         if training_data_indicies[11%num_total_training_images] == 1:
             x_data.append(lineify_bottom_right(np.copy(blank)))
-            y_data.append(11)
+            y_data.append(counter)
+            counter = counter + 1
             
         if training_data_indicies[12%num_total_training_images] == 1:
             x_data.append(circleify_top_left(np.copy(blank)))
-            y_data.append(12)
+            y_data.append(counter)
+            counter = counter + 1
 
         if training_data_indicies[13%num_total_training_images] == 1:
             x_data.append(circleify_bottom_right(np.copy(blank)))
-            y_data.append(13)
+            y_data.append(counter)
+            counter = counter + 1
             
         if training_data_indicies[14%num_total_training_images] == 1:
             x_data.append(triangulify_top_left(np.copy(blank)))
-            y_data.append(14)
+            y_data.append(counter)
+            counter = counter + 1
 
         if training_data_indicies[15%num_total_training_images] == 1:
             x_data.append(triangulify_bottom_right(np.copy(blank)))
-            y_data.append(15)
+            y_data.append(counter)
+            counter = counter + 1
             
         # row 3
         if training_data_indicies[16%num_total_training_images] == 1:
@@ -251,7 +268,7 @@ def draw_images(img_num, model, input):
 #                     plt.show()
 
                     return True, img   # draw an image
-            if INIT_STEP % 300 == 0: 
+            # if INIT_STEP % 300 == 0: 
                 # print(loss_value)
             
         idx += idx
@@ -267,7 +284,7 @@ if __name__ == "__main__":
 	img_width = 28
 	img_height = 28
 
-	test = np.array([1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0])
+	test = np.array([1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0])
 	num_of_pictures = np.sum(test)
 	nb_classes = num_of_pictures
 	X2, Y2 = preprocess(test)
@@ -292,6 +309,8 @@ if __name__ == "__main__":
 	    if result == True:
 	        img_num += 1
 	    imsave(str(img_num) + '.png', img)
+
+
 
 
 	            
