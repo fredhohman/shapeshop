@@ -26,7 +26,7 @@
       <div class="jumbotron">
         <div class="container">
           <h1>Illustrating Conceptual Semantics with Deep Learning</h1>
-          <h2>Codename: <i>Deep Shape Explorer</i></h2>
+          <h3>Codename: <b><i>DeepShape</i></b></h3>
           <!-- <p>Fred Hohman, Nathan Hodas, Polo Chau</p> -->
         </div>
       </div>
@@ -44,7 +44,7 @@
 
         <div class="row">
           <div class="col-md-12">
-            <h2>Select Training Data</h2>
+            <h2><span class="circle">1</span> Select Training Data</h2>
             <!-- <div class="vspace-small"></div> -->
           </div>
         </div>
@@ -54,12 +54,12 @@
            <div class="col-md-6" style="padding: 0px;">
 
             <div class="col-xs-3 col-md-6">
-              <a href="#" class="thumbnail">
+              <a id="tdata0" href="#" class="thumbnail">
                 <img src="static/images/box.png" alt="...">
               </a>
             </div>
             <div class="col-xs-3 col-md-6">
-              <a href="#" class="thumbnail">
+              <a id="tdata1" href="#" class="thumbnail">
                 <img src="static/images/box_hollow.png" alt="...">
               </a>
             </div>
@@ -68,12 +68,12 @@
           <div class="col-md-6" style="padding: 0px;">
 
             <div class="col-xs-3 col-md-6">
-              <a href="#" class="thumbnail">
+              <a id="tdata2" href="#" class="thumbnail">
                 <img src="static/images/line.png" alt="...">
               </a>
             </div>
             <div class="col-xs-3 col-md-6">
-              <a href="#" class="thumbnail">
+              <a id="tdata3" href="#" class="thumbnail">
                 <img src="static/images/line_horizontal.png" alt="...">
               </a>
             </div>
@@ -85,12 +85,12 @@
          <div class="col-md-6" style="padding: 0px;">
 
           <div class="col-xs-3 col-md-6">
-            <a href="#" class="thumbnail">
+            <a id="tdata4" href="#" class="thumbnail">
               <img src="static/images/circle.png" alt="...">
             </a>
           </div>
           <div class="col-xs-3 col-md-6">
-            <a href="#" class="thumbnail">
+            <a id="tdata5" href="#" class="thumbnail">
               <img src="static/images/circle_hollow.png" alt="...">
             </a>
           </div>
@@ -99,12 +99,12 @@
         <div class="col-md-6" style="padding: 0px;">
 
           <div class="col-xs-3 col-md-6">
-            <a href="#" class="thumbnail">
+            <a id="tdata6" href="#" class="thumbnail">
               <img src="static/images/tri.png" alt="...">
             </a>
           </div>
           <div class="col-xs-3 col-md-6">
-            <a href="#" class="thumbnail">
+            <a id="tdata7" href="#" class="thumbnail">
               <img src="static/images/tri_hollow.png" alt="...">
             </a>
           </div>
@@ -117,12 +117,12 @@
        <div class="col-md-6" style="padding: 0px;">
 
         <div class="col-xs-3 col-md-6">
-          <a href="#" class="thumbnail">
+          <a id="tdata8" href="#" class="thumbnail">
             <img src="static/images/tl.png" alt="...">
           </a>
         </div>
         <div class="col-xs-3 col-md-6">
-          <a href="#" class="thumbnail">
+          <a id="tdata9" href="#" class="thumbnail">
             <img src="static/images/br.png" alt="...">
           </a>
         </div>
@@ -131,12 +131,12 @@
       <div class="col-md-6" style="padding: 0px;">
 
         <div class="col-xs-3 col-md-6">
-          <a href="#" class="thumbnail">
+          <a id="tdata10" href="#" class="thumbnail">
             <img src="static/images/line_tl.png" alt="...">
           </a>
         </div>
         <div class="col-xs-3 col-md-6">
-          <a href="#" class="thumbnail">
+          <a id="tdata11" href="#" class="thumbnail">
             <img src="static/images/line_br.png" alt="...">
           </a>
         </div>
@@ -148,12 +148,12 @@
      <div class="col-md-6" style="padding: 0px;">
 
       <div class="col-xs-3 col-md-6">
-        <a href="#" class="thumbnail">
+        <a id="tdata12" href="#" class="thumbnail">
           <img src="static/images/circle_tl.png" alt="...">
         </a>
       </div>
       <div class="col-xs-3 col-md-6">
-        <a href="#" class="thumbnail">
+        <a id="tdata13" href="#" class="thumbnail">
           <img src="static/images/circle_br.png" alt="...">
         </a>
       </div>
@@ -162,12 +162,12 @@
     <div class="col-md-6" style="padding: 0px;">
 
       <div class="col-xs-3 col-md-6">
-        <a href="#" class="thumbnail">
+        <a id="tdata14" href="#" class="thumbnail">
           <img src="static/images/tri_tl.png" alt="...">
         </a>
       </div>
       <div class="col-xs-3 col-md-6">
-        <a href="#" class="thumbnail">
+        <a id="tdata15" href="#" class="thumbnail">
           <img src="static/images/tri_br.png" alt="...">
         </a>
       </div>
@@ -180,12 +180,12 @@
    <div class="col-md-6" style="padding: 0px;">
 
     <div class="col-xs-3 col-md-6">
-      <a href="#" class="thumbnail">
+      <a id="tdata16" href="#" class="thumbnail">
         <img src="static/images/noise.png" alt="...">
       </a>
     </div>
     <div class="col-xs-3 col-md-6">
-      <a href="#" class="thumbnail">
+      <a id="tdata17" href="#" class="thumbnail">
         <img src="static/images/noise_blur.png" alt="...">
       </a>
     </div>
@@ -198,45 +198,39 @@
 <div class="row vspace-medium"></div>
 
 <div class="row">
-  <div class="col-md-2">
-    <p><a class="btn btn-primary btn-lg" href="#" role="button">Train and Draw</a></p>
-    <p><b>Train</b> a fully connected dense neural network image classifier.</p>
-    <p><b>Draw</b> each class by maximizing each output.</p>
-  </div>
-
-  <div class="col-md-4 hyperparameter-wrapper">
-    <h2 class="hyperparameter-title">Select Hyperparameters</h2>
+  <div class="col-md-5">
+    <h2 class="hyperparameter-title"><span class="circle">2</span> Select Hyperparameters</h2>
 
     <div class="hyperparameter display-inline-block">Initial Image</div>
     <div class="row vspace-small"></div>
     <div class="row">
 
         <div class="col-xs-3 col-md-3">
-          <a href="#" class="thumbnail thumbnail-small">
+          <a id="iimage0" href="#" class="thumbnail thumbnail-small">
             <img src="static/images/zeros.png" alt="...">
           </a>
         </div>
         <div class="col-xs-3 col-md-3">
-          <a href="#" class="thumbnail thumbnail-small">
+          <a id="iimage1" href="#" class="thumbnail thumbnail-small">
             <img src="static/images/ones.png" alt="...">
           </a>
         </div>
         <div class="col-xs-3 col-md-3">
-          <a href="#" class="thumbnail thumbnail-small">
+          <a id="iimage2" href="#" class="thumbnail thumbnail-small">
             <img src="static/images/noise.png" alt="...">
           </a>
         </div>
         <div class="col-xs-3 col-md-3">
-          <a href="#" class="thumbnail thumbnail-small">
+          <a id="iimage3" href="#" class="thumbnail thumbnail-small">
             <img src="static/images/noise_blur.png" alt="...">
           </a>
         </div>
     </div>
   </div>
 
-  <div class="col-md-4">
-    <h2 class="hyperparameter-title" style="visibility: hidden;">Hidden Title</h2>
-    <div class="hyperparameter">Step-size</div>
+  <div class="col-md-2">
+    <h2 class="hyperparameter-title" style="visibility: hidden; ">Hidden</h2>
+    <div class="hyperparameter display-inline-block">Step-size</div>
     <div class="row vspace-small"></div>
     <div class="btn-group" data-toggle="buttons">
       <label class="btn btn-primary active">
@@ -249,13 +243,23 @@
         <input type="radio" name="options" id="option3" autocomplete="off"> 0.5
       </label>
     </div>
+
+
+  </div>
+
+  <div class="col-md-4 draw-button-wrapper">
+    <h2 class="hyperparameter-title"><span class="circle">3</span> Train and Draw</h2>
+    <p>
+      <b>Train</b> a neural network image classifier.
+      <br>
+      <b>Draw</b> each class by maximizing each output.
+    </p>
+    <p><a id="train-and-draw" class="btn btn-primary btn-lg" href="#" role="button">Train and Draw</a></p>
+
   </div>
 
 </div>
 <div class="row vspace-small"></div>
-
-
-
 
 
 <div class="row">
@@ -263,7 +267,7 @@
 </div>
 
 
-<div class="row">
+<div id="results" class="row">
   <div class="col-md-12">
     <h2>Results</h2>
   </div>
@@ -284,7 +288,6 @@
       <p class="hyperparameter">0.005</p>
     </div>
   </div>
-</div>
 
 <div class="row">
  <div class="col-md-6" style="padding: 0px;">
@@ -365,16 +368,20 @@
 
 
 <div class="row vspace-large"></div>
-
-
 </div>
 
+<!-- <div class="jumbotron footer">
+  <div class="container">
+    <p>Fred Hohman, Nathan Hodas, Polo Chau</p>
+  </div>
+</div> -->
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="static/js/bootstrap.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="static/js/deep.js"></script>
 </body>
 </html>
