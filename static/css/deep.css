@@ -26,6 +26,7 @@ body {
     border: none;
     border-radius: none;
     padding: 3px;
+    max-width: 62px;
 }
 .thumbnail-small:hover {
   box-shadow: 0 7px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
@@ -53,6 +54,9 @@ body {
 }
 .vspace-small {
 	height: 15px;
+}
+.vspace-result {
+	height: 30px;
 }
 .display-inline-block {
 	display: inline-block;

@@ -362,7 +362,7 @@ def save_image(data, cm, fn, dpi):
     plt.savefig(fn, dpi = dpi) 
     plt.close()
 
-def model(training_data_indicies, initial_image_indicies):
+def model(training_data_indicies, initial_image_indicies, number_of_times_clicked):
 	img_width = 28
 	img_height = 28
 
@@ -393,7 +393,7 @@ def model(training_data_indicies, initial_image_indicies):
 	        img_num += 1
 
 	    # imsave("results/" + str(img_num) + '.png', 1-img)
-	    save_image(1-img,'gray','results/' + str(img_num) + '.png', 500)
+	    save_image(1-img,'gray','static/results/' + str(number_of_times_clicked) + '_' + str(img_num) + '.png', 500)
 	    results.append(1-img)
 
 	results = np.array(results)

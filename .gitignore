@@ -1,2 +1,4 @@
 *.pyc
 .DS_Store
+static/results/*
+.ipynb_checkpoints/

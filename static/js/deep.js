@@ -1,8 +1,10 @@
 training_data_indicies = new Array(18).fill(0);
 initial_image_indicies = new Array(4).fill(0);
+var number_of_times_clicked = 0;
 
 $(function() {                       //run when the DOM is ready
   $(".thumbnail").click(function() {  //use a class, since your ID gets mangled
+
     $(this).toggleClass("thumbnail-clicked");      //add the class to the clicked element
   });
 });
@@ -12,6 +14,8 @@ $('#train-and-draw').removeAttr('href');
 
 $(function() {
 	$("#train-and-draw").click(function() {
+        $(document.body).css({"cursor": "wait"});
+        number_of_times_clicked = number_of_times_clicked + 1;
 
 		for (var i = 0; i < training_data_indicies.length; i++) {
 	    	if ($("#tdata"+String(i)).hasClass("thumbnail-clicked")) {
@@ -33,18 +37,45 @@ $(function() {
     	console.log(initial_image_indicies);
 
     	data_to_python = {"training_data_indicies": training_data_indicies, 
-    					  "initial_image_indicies": initial_image_indicies};
+    					  "initial_image_indicies": initial_image_indicies,
+                          "number_of_times_clicked": number_of_times_clicked};
 
     	d3.json('/run/').post(JSON.stringify(data_to_python), function(error, data) {
-    			console.log(data);
+    			$(document.body).css({"cursor": "default"});
+
+                console.log(data);
     			console.log(error);
-    			// row = d3.select("#results").insert("div").attr("class", "row");
-    			// row.append("div").attr("class", "col-md-6").attr("style", "padding: 0px")
-    			//    .append("div").attr("class", "col-md-6").attr("style", "padding: 0px")
-    			//    .append("div").attr("class", "col-xs-3 col-md-6")
-    			//    .append("a").attr("href", "#").attr("class", "thumbnail thumbnail-result")
-    			//    .append("img").attr("src", "results/"+"1"+".png")
-    			//    .data(data.errors).enter().append("div").attr("class", "caption error-metric").text(function(d) {return d});
+
+                var preResultsInitialImageIndex = initial_image_indicies.indexOf(1);
+                var preResultsInitialImage = ['zeros', 'ones', 'noise', 'noise_blur'][preResultsInitialImageIndex];
+
+                stepSize = d3.select("#step-size > label.active").text();
+                
+                d3.select("#results").append("div").attr("class", "vspace-result");
+
+                preResults = d3.select("#results").append("div").attr("class", "row");
+                preResults.append("div").attr("class", "col-md-1 display-inline-block").style("width", "5%")
+                          .append("h3").text("[" + String(number_of_times_clicked) + "]:");
+                preResults.append("div").attr("class", "col-md-1 display-inline-block")
+                          .append("a").attr("class", "thumbnail thumbnail-small thumbnail-result")
+                          .append("img").attr("src", "static/images/" + preResultsInitialImage + ".png");
+                preResultsHyperparameters = preResults.append("div").attr("class", "col-md-3 display-inline-block");
+                preResultsHyperparameters.append("p").attr("class", "hyperparameter").text("Step-size")
+                                         .append("p").attr("class", "hyperparameter").text(String(stepSize));
+
+                originalThumbBB = d3.select("#tdata0").node().getBoundingClientRect();
+
+    			results = d3.select("#results").append("div").attr("class", "row");
+
+    			thumbnailEnter = results.selectAll(".thumbnail-result-div").data(data.errors).enter()
+		    		   .append("div").attr("class", "thumbnail-result-div")
+                       .style("width", String(originalThumbBB.width + 30) + "px")
+                       .style("display", "inline-block").style("padding-left", "15px").style("padding-right", "15px")
+	    		       .append("a").attr("class", "thumbnail thumbnail-result");
+
+	    		thumbnailEnter.append("img").attr("src", function(d, i) {return "static/results/" + String(number_of_times_clicked) + '_' + (i+1) + ".png"});
+	    		thumbnailEnter.append("div").attr("class", "caption error-metric").text(function(d) { return d3.format(".2f")(d) });
+
 
     			console.log("made result row");
     		}
