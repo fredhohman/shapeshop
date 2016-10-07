@@ -14,4 +14,6 @@ Run the system by
 python server.py
 ```
 
+and point your browser to `http://localhost:5000`.
+
 ## Miscellaneous 
