@@ -22,7 +22,10 @@ def run():
 		number_of_times_clicked = json.loads(request.data)["number_of_times_clicked"]
 		step_size = json.loads(request.data)["step_size"]
 
-		results, errors = model.model(training_data_indicies, initial_image_indicies, number_of_times_clicked, step_size)
+		model_type = json.loads(request.data)["model_type"]
+		epoch = json.loads(request.data)["epoch"]
+
+		results, errors = model.model(training_data_indicies, initial_image_indicies, number_of_times_clicked, step_size, model_type, epoch)
 
 		results = results.tolist()
 		errors = errors.tolist()

@@ -177,9 +177,9 @@ def preprocess(training_data_indicies):
     
     return X2, Y2
 
-def build_and_train_model(X2, Y2, nb_classes):
+def build_and_train_model(X2, Y2, nb_classes, model_type, epoch):
     batch_size = 4 
-    nb_epoch = 20
+    nb_epoch = epoch
     img_rows, img_cols = 28, 28
     WIDTH = 64*2
     num_layers = 8
@@ -190,27 +190,33 @@ def build_and_train_model(X2, Y2, nb_classes):
     pool_size = (2, 2)
     # convolution kernel size
     kernel_size = (3, 3)
+    
+    print(str(model_type))
+    print(type(str(model_type)))
+    print(len(str(model_type)))
 
-    m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1],
-                        border_mode='valid')(input)
-    m = Activation('relu')(m)
-    m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1])(m)
-    m = Activation('relu')(m)
-    m = MaxPooling2D(pool_size=pool_size)(m)
-    m = Dropout(0.25)(m)
+    if str(model_type).strip() == "DNN":
+        m = Flatten()(input)
+        m = Dense(WIDTH, activation='tanh')(m)
+        # m = Dropout(0.2)(m)
+        m = Dense(WIDTH, activation='tanh')(m)
+        m = Dense(nb_classes, activation='softmax')(m)
 
-    m = Flatten()(m)
-    m = Dense(128)(m)
-    m = Activation('relu')(m)
-    m = Dropout(0.5)(m)
-    m = Dense(nb_classes)(m)
-    m = Activation('softmax')(m)
+    if str(model_type).strip() == "CNN":
+        m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1],
+                            border_mode='valid')(input)
+        m = Activation('relu')(m)
+        m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1])(m)
+        m = Activation('relu')(m)
+        m = MaxPooling2D(pool_size=pool_size)(m)
+        m = Dropout(0.25)(m)
 
-    # m = Flatten()(input)
-    # m = Dense(WIDTH, activation='tanh')(m)
-    # # m = Dropout(0.2)(m)
-    # m = Dense(WIDTH, activation='tanh')(m)
-    # m = Dense(nb_classes, activation='softmax')(m)
+        m = Flatten()(m)
+        m = Dense(128)(m)
+        m = Activation('relu')(m)
+        m = Dropout(0.5)(m)
+        m = Dense(nb_classes)(m)
+        m = Activation('softmax')(m)
 
     model = Model(input=input, output=[m])
 
@@ -383,7 +389,7 @@ def save_image(data, cm, fn, dpi):
     plt.savefig(fn, dpi = dpi) 
     plt.close()
 
-def model(training_data_indicies, initial_image_indicies, number_of_times_clicked, step_size):
+def model(training_data_indicies, initial_image_indicies, number_of_times_clicked, step_size, model_type, epoch):
 	img_width = 28
 	img_height = 28
 
@@ -394,7 +400,7 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
 	print(X2.shape)
 	print(Y2.shape)
 
-	model, input = build_and_train_model(X2, Y2, nb_classes)
+	model, input = build_and_train_model(X2, Y2, nb_classes, model_type, epoch)
 
 	img_num = 0
 	results = []

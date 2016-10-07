@@ -38,12 +38,16 @@ $(function() {
     	console.log(training_data_indicies);
     	console.log(initial_image_indicies);
 
+        model_type = d3.select("#model-type > label.active").text();
         step_size = Number(d3.select("#step-size > label.active").text());
+        epoch = Number(d3.select("#epoch > label.active").text());
 
     	data_to_python = {"training_data_indicies": training_data_indicies, 
     					  "initial_image_indicies": initial_image_indicies,
                           "step_size": step_size,
-                          "number_of_times_clicked": number_of_times_clicked};
+                          "number_of_times_clicked": number_of_times_clicked,
+                          "model_type": model_type,
+                          "epoch": epoch};
 
     	d3.json('/run/').post(JSON.stringify(data_to_python), function(error, data) {
     			$(document.body).css({"cursor": "default"});
@@ -59,7 +63,9 @@ $(function() {
                 var preResultsInitialImageIndex = initial_image_indicies.indexOf(1);
                 var preResultsInitialImage = ['zeros', 'ones', 'noise', 'noise_blur'][preResultsInitialImageIndex];
 
+                model_type = d3.select("#model-type > label.active").text();
                 step_size = d3.select("#step-size > label.active").text();
+                epoch = Number(d3.select("#epoch > label.active").text());
                 
                 d3.select("#results").append("div").attr("class", "vspace-result");
 
@@ -69,9 +75,13 @@ $(function() {
                 preResults.append("div").attr("class", "col-md-1 display-inline-block")
                           .append("a").attr("class", "thumbnail thumbnail-small thumbnail-result")
                           .append("img").attr("src", "static/images/" + preResultsInitialImage + ".png");
-                preResultsHyperparameters = preResults.append("div").attr("class", "col-md-3 display-inline-block");
-                preResultsHyperparameters.append("p").attr("class", "hyperparameter").text("Step-size")
-                                         .append("p").attr("class", "hyperparameter").text(String(step_size));
+                preResultsModel = preResults.append("div").attr("class", "col-md-1 display-inline-block");
+                preResultsModel.append("p").attr("class", "hyperparameter display-inline-block").text("Model: ");
+                preResultsModel.append("p").attr("class", "hyperparameter display-inline-block").text(String(model_type).trim());
+
+                preResultsHyperparameters = preResults.append("div").attr("class", "col-md-2 display-inline-block");
+                preResultsHyperparameters.append("p").attr("class", "hyperparameter display-inline-block").text("Step-size: " + String(step_size));
+                preResultsHyperparameters.append("p").attr("class", "hyperparameter display-inline-block").text("Epoch Count: " + String(epoch));
 
                 originalThumbBB = d3.select("#tdata0").node().getBoundingClientRect();
 
@@ -90,7 +100,7 @@ $(function() {
     			console.log("made result row");
 
                 $('html, body').animate({ 
-                    scrollTop: $(document).height()-$(window).height()
+                    scrollTop: $(document).height()-$(window).height() + 150
                 }, 400);
 
     		}

@@ -25,8 +25,9 @@
     <body>
       <div class="jumbotron">
         <div class="container">
-          <h1>Illustrating Conceptual Semantics with Deep Learning</h1>
-          <h3>Codename: <b><i>DeepShape</i></b></h3>
+          <h1>DeepShape</h1>
+          <h3>Visualizing Learned Semantics with Deep Learning</h3>
+          <!-- <h3>Codename: <b><i>DeepShape</i></b></h3> -->
           <!-- <p>Fred Hohman, Nathan Hodas, Polo Chau</p> -->
         </div>
       </div>
@@ -36,7 +37,7 @@
         <div class="row">
           <div class="col-md-12">
             <!-- <h2>Title here?</h2> -->
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean pretium lacus in arcu maximus facilisis. Nulla elementum urna mi, a aliquet augue dapibus et. Sed varius accumsan ex, quis sollicitudin velit sagittis a. Sed fringilla elit sed dui sollicitudin pharetra. Vivamus in vulputate nulla, vitae volutpat nisl. Maecenas sagittis auctor eros, vitae dictum lorem sodales ac. Suspendisse interdum, sem eu ultricies accumsan, risus justo molestie risus, eget dictum mi metus eget nunc. Fusce cursus feugiat orci, eget ullamcorper ante venenatis ut. In ac lectus dolor. Vivamus vel tristique diam.
+            <p id="info">DeepShape is an interactive system for visualizing what conceptual semantics a neural network model has learned from training data consisting of simple shapes in images.
             </p>
           </div>
         </div>
@@ -199,8 +200,27 @@
 
 <div class="row">
   <div class="col-md-4">
+    <h2 class="hyperparameter-title"><span class="circle">2</span> Select Model</h2>
+    <p>
+      <b>DNN:</b> a dense neural network. <br>image classifier.
+      <br>
+      <b>CNN:</b> a convolutional neural network. <br>image classifier.
+    </p>
+    <div id="model-type" class="btn-group" data-toggle="buttons">
+      <label class="btn btn-primary active">
+        <input type="radio" name="options" id="option1" autocomplete="off"> DNN
+      </label>
+      <label class="btn btn-primary">
+        <input type="radio" name="options" id="option2" autocomplete="off"> CNN
+      </label>
+
+    </div>
+
+  </div>
+
+  <div class="col-md-4">
     <div class="row">
-      <h2 class="hyperparameter-title"><span class="circle">2</span> Select Hyperparameters</h2>
+      <h2 class="hyperparameter-title"><span class="circle">3</span> Select Hyperparameters</h2>
     </div>
     <div class="hyperparameter display-inline-block">Initial Image</div>
     <div class="row vspace-small"></div>
@@ -232,7 +252,8 @@
   <div class="col-md-3">
     <h2 class="hyperparameter-title" style="visibility: hidden; ">Hidden</h2>
     <div class="hyperparameter display-inline-block">Step-size</div>
-    <div class="row vspace-small"></div>
+    <!-- <div class="row vspace-small"></div> -->
+    <br>
     <div id="step-size" class="btn-group" data-toggle="buttons">
       <label class="btn btn-primary">
         <input type="radio" name="options" id="option1" autocomplete="off"> 0.001
@@ -245,11 +266,37 @@
       </label>
     </div>
 
+    <div class="row vspace-small"></div>
+
+        <!-- <h2 class="hyperparameter-title" style="visibility: hidden; ">Hidden</h2> -->
+    <div class="hyperparameter display-inline-block">Epoch Count</div>
+    <!-- <div class="row vspace-small"></div> -->
+    <br>
+    <div id="epoch" class="btn-group" data-toggle="buttons">
+      <label class="btn btn-primary">
+        <input type="radio" name="options" id="option1" autocomplete="off"> 50
+      </label>
+      <label class="btn btn-primary active">
+        <input type="radio" name="options" id="option2" autocomplete="off"> 100
+      </label>
+      <label class="btn btn-primary">
+        <input type="radio" name="options" id="option3" autocomplete="off"> 150
+      </label>
+            <label class="btn btn-primary">
+        <input type="radio" name="options" id="option3" autocomplete="off"> 200
+      </label>
+            <label class="btn btn-primary">
+        <input type="radio" name="options" id="option3" autocomplete="off"> 250
+      </label>
+    </div>
+
 
   </div>
-
-  <div class="col-md-4 draw-button-wrapper">
-    <h2 class="hyperparameter-title"><span class="circle">3</span> Train and Draw</h2>
+</div>
+<div class="vspace-medium"></div>
+<div class="row">
+  <div class="col-md-4">
+    <h2 class="hyperparameter-title"><span class="circle">4</span> Train and Draw</h2>
     <p>
       <b>Train</b> a neural network image classifier.
       <br>
@@ -276,16 +323,21 @@
 <!--   <div class="row">
     <div class="col-md-1 display-inline-block" style="width: 5%">
       <h3>[1]:</h3>
-    </div>
+    </div> -->
 
-    <div class="col-md-1 display-inline-block">
+<!--     <div class="col-md-1 display-inline-block">
       <a href="#" class="thumbnail thumbnail-small thumbnail-result">
         <img src="static/images/noise.png" alt="...">
       </a>
     </div>
-    <div class="col-md-3 display-inline-block">
-      <p class="hyperparameter">Step-size</p>
-      <p class="hyperparameter">0.005</p>
+    <div class="col-md-1 display-inline-block">
+      <p class="hyperparameter display-inline-block">Model: CNN</p>
+    </div>
+    <div class="col-md-2 display-inline-block">
+      <p class="hyperparameter display-inline-block">Step-size: </p>
+      <p class="hyperparameter display-inline-block">0.005</p>
+      <p class="hyperparameter display-inline-block">Step-size</p>
+      <p class="hyperparameter display-inline-block">0.005</p>
     </div>
   </div> -->
 
