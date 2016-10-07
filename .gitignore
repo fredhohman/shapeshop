@@ -1,4 +1,4 @@
 *.pyc
 .DS_Store
-static/results/*
+static/results/*.png
 .ipynb_checkpoints/
