@@ -229,19 +229,19 @@
     </div>
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-3">
     <h2 class="hyperparameter-title" style="visibility: hidden; ">Hidden</h2>
     <div class="hyperparameter display-inline-block">Step-size</div>
     <div class="row vspace-small"></div>
     <div id="step-size" class="btn-group" data-toggle="buttons">
+      <label class="btn btn-primary">
+        <input type="radio" name="options" id="option1" autocomplete="off"> 0.001
+      </label>
       <label class="btn btn-primary active">
-        <input type="radio" name="options" id="option1" autocomplete="off" checked> 0.005
+        <input type="radio" name="options" id="option2" autocomplete="off"> 0.005
       </label>
       <label class="btn btn-primary">
-        <input type="radio" name="options" id="option2" autocomplete="off"> 0.05
-      </label>
-      <label class="btn btn-primary">
-        <input type="radio" name="options" id="option3" autocomplete="off"> 0.5
+        <input type="radio" name="options" id="option3" autocomplete="off"> 0.01
       </label>
     </div>
 
@@ -269,9 +269,9 @@
 
 
 <div id="results" class="row">
-  <div class="col-md-12">
+<!--   <div class="col-md-12">
     <h2>Results</h2>
-  </div>
+  </div> -->
 
 <!--   <div class="row">
     <div class="col-md-1 display-inline-block" style="width: 5%">

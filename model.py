@@ -178,31 +178,51 @@ def preprocess(training_data_indicies):
     return X2, Y2
 
 def build_and_train_model(X2, Y2, nb_classes):
-	batch_size = 4 
-	nb_epoch = 200
-	img_rows, img_cols = 28, 28
-	WIDTH = 64*2
-	num_layers = 8
+    batch_size = 4 
+    nb_epoch = 20
+    img_rows, img_cols = 28, 28
+    WIDTH = 64*2
+    num_layers = 8
 
-	input = Input(batch_shape=(batch_size, 1, img_rows, img_cols))
+    input = Input(batch_shape=(batch_size, 1, img_rows, img_cols))
+    nb_filters = 32
+    # size of pooling area for max pooling
+    pool_size = (2, 2)
+    # convolution kernel size
+    kernel_size = (3, 3)
 
-	m = Flatten()(input)
-	m = Dense(WIDTH, activation='tanh')(m)
-	# m = Dropout(0.2)(m)
-	m = Dense(WIDTH, activation='tanh')(m)
-	m = Dense(nb_classes, activation='softmax')(m)
+    m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1],
+                        border_mode='valid')(input)
+    m = Activation('relu')(m)
+    m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1])(m)
+    m = Activation('relu')(m)
+    m = MaxPooling2D(pool_size=pool_size)(m)
+    m = Dropout(0.25)(m)
 
-	model = Model(input=input, output=[m])
+    m = Flatten()(m)
+    m = Dense(128)(m)
+    m = Activation('relu')(m)
+    m = Dropout(0.5)(m)
+    m = Dense(nb_classes)(m)
+    m = Activation('softmax')(m)
 
-	model.compile(loss='categorical_crossentropy',
-	              optimizer='sgd',
-	              metrics=['accuracy'])
+    # m = Flatten()(input)
+    # m = Dense(WIDTH, activation='tanh')(m)
+    # # m = Dropout(0.2)(m)
+    # m = Dense(WIDTH, activation='tanh')(m)
+    # m = Dense(nb_classes, activation='softmax')(m)
 
-	model.fit(X2,Y2,batch_size=batch_size,nb_epoch=nb_epoch,validation_split=0.2,shuffle=True, verbose=2)
-	sleep(0.1)
-	return model, input
+    model = Model(input=input, output=[m])
 
-def draw_images(img_num, model, input, initial_image_indicies):
+    model.compile(loss='categorical_crossentropy',
+                  optimizer='adadelta', #'sgd'
+                  metrics=['accuracy'])
+
+    model.fit(X2,Y2,batch_size=batch_size,nb_epoch=nb_epoch,validation_split=0.2,shuffle=True, verbose=2)
+    sleep(0.1)
+    return model, input
+
+def draw_images(img_num, model, input, initial_image_indicies, step_size):
     
     # we build a loss function 
     loss = model.output[0,img_num]
@@ -230,23 +250,24 @@ def draw_images(img_num, model, input, initial_image_indicies):
 #     input_img_data = boxify_top_left_half(np.zeros([1, img_width, img_height]))[None,]
 
     if initial_image_indicies[0] == 1:
-	    input_img_data = np.zeros([1, 1, img_width, img_height])
-	    print("initial image is zeros")
+        input_img_data = np.zeros([1, 1, img_width, img_height])
+        print("initial image is zeros")
     if initial_image_indicies[1] == 1:
-    	input_img_data = np.ones([1, 1, img_width, img_height])
-    	print("initial image is ones")
-	if initial_image_indicies[2] == 1:
-	    input_img_data = np.random.random([1, 1, img_width, img_height])
-	    print("initial image is random")
+        input_img_data = np.ones([1, 1, img_width, img_height])
+        print("initial image is ones")
+    if initial_image_indicies[2] == 1:
+        input_img_data = np.random.random((1, 1, img_width, img_height))*1.0
+        print("initial image is random")
     if initial_image_indicies[3] == 1: 
-	    input_img_data = ndimage.gaussian_filter(np.random.random((1, 1, img_width, img_height))*1.0, 1)
-	    print("initial image is random blur")
+        input_img_data = ndimage.gaussian_filter(np.random.random((1, 1, img_width, img_height))*1.0, 1)
+        print("initial image is random blur")
 
     temp_time = time.time()
 #     print('Time after initialization:' , temp_time - start_time)
     
     # we run gradient ascent    
-    step = 0.005 #0.05
+    step = step_size
+    # step = 0.005 
     switched_on = True # should be False for drawing VGG pictures
     NUM_ITERS = 2
     INIT_STEP = 300
@@ -362,7 +383,7 @@ def save_image(data, cm, fn, dpi):
     plt.savefig(fn, dpi = dpi) 
     plt.close()
 
-def model(training_data_indicies, initial_image_indicies, number_of_times_clicked):
+def model(training_data_indicies, initial_image_indicies, number_of_times_clicked, step_size):
 	img_width = 28
 	img_height = 28
 
@@ -384,7 +405,7 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
 	    start_time = time.time()
 	    print('START image', str(img_num))
 
-	    result_bool, img = draw_images(img_num, model, input, initial_image_indicies)
+	    result_bool, img = draw_images(img_num, model, input, initial_image_indicies, step_size)
 	               
 	    end_time = time.time()
 	    print('END image', str(img_num) + ":", end_time - start_time)

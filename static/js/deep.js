@@ -2,6 +2,8 @@ training_data_indicies = new Array(18).fill(0);
 initial_image_indicies = new Array(4).fill(0);
 var number_of_times_clicked = 0;
 
+console.log(typeof(new Date().getTime()));
+
 $(function() {                       //run when the DOM is ready
   $(".thumbnail").click(function() {  //use a class, since your ID gets mangled
 
@@ -36,8 +38,11 @@ $(function() {
     	console.log(training_data_indicies);
     	console.log(initial_image_indicies);
 
+        step_size = Number(d3.select("#step-size > label.active").text());
+
     	data_to_python = {"training_data_indicies": training_data_indicies, 
     					  "initial_image_indicies": initial_image_indicies,
+                          "step_size": step_size,
                           "number_of_times_clicked": number_of_times_clicked};
 
     	d3.json('/run/').post(JSON.stringify(data_to_python), function(error, data) {
@@ -46,10 +51,15 @@ $(function() {
                 console.log(data);
     			console.log(error);
 
+                if (number_of_times_clicked == 1) {
+                    d3.select("#results").append("div").attr("class", "col-md-12")
+                                         .append("h2").text("Results");
+                }
+
                 var preResultsInitialImageIndex = initial_image_indicies.indexOf(1);
                 var preResultsInitialImage = ['zeros', 'ones', 'noise', 'noise_blur'][preResultsInitialImageIndex];
 
-                stepSize = d3.select("#step-size > label.active").text();
+                step_size = d3.select("#step-size > label.active").text();
                 
                 d3.select("#results").append("div").attr("class", "vspace-result");
 
@@ -61,7 +71,7 @@ $(function() {
                           .append("img").attr("src", "static/images/" + preResultsInitialImage + ".png");
                 preResultsHyperparameters = preResults.append("div").attr("class", "col-md-3 display-inline-block");
                 preResultsHyperparameters.append("p").attr("class", "hyperparameter").text("Step-size")
-                                         .append("p").attr("class", "hyperparameter").text(String(stepSize));
+                                         .append("p").attr("class", "hyperparameter").text(String(step_size));
 
                 originalThumbBB = d3.select("#tdata0").node().getBoundingClientRect();
 
@@ -73,11 +83,16 @@ $(function() {
                        .style("display", "inline-block").style("padding-left", "15px").style("padding-right", "15px")
 	    		       .append("a").attr("class", "thumbnail thumbnail-result");
 
-	    		thumbnailEnter.append("img").attr("src", function(d, i) {return "static/results/" + String(number_of_times_clicked) + '_' + (i+1) + ".png"});
+	    		thumbnailEnter.append("img").attr("src", function(d, i) {return "static/results/" + String(number_of_times_clicked) + '_' + (i+1) + ".png" + "?v=" + String(new Date().getTime()) });
 	    		thumbnailEnter.append("div").attr("class", "caption error-metric").text(function(d) { return d3.format(".2f")(d) });
 
 
     			console.log("made result row");
+
+                $('html, body').animate({ 
+                    scrollTop: $(document).height()-$(window).height()
+                }, 400);
+
     		}
 		);
 	})
