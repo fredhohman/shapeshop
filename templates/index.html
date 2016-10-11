@@ -26,7 +26,7 @@
       <div class="jumbotron">
         <div class="container">
           <h1>DeepShape</h1>
-          <h3>Visualizing Learned Semantics with Deep Learning</h3>
+          <h3><i>Visualizing Learned Semantics in Simple Shapes with Deep Learning</i></h3>
           <!-- <h3>Codename: <b><i>DeepShape</i></b></h3> -->
           <!-- <p>Fred Hohman, Nathan Hodas, Polo Chau</p> -->
         </div>
@@ -34,18 +34,21 @@
 
       <div class="container">
 
-        <div class="row">
+<!--         <div class="row">
           <div class="col-md-12">
-            <!-- <h2>Title here?</h2> -->
             <p id="info">DeepShape is an interactive system for visualizing what conceptual semantics a neural network model has learned from training data consisting of simple shapes in images.
             </p>
           </div>
-        </div>
-
+        </div> -->
 
         <div class="row">
           <div class="col-md-12">
-            <h2><span class="circle">1</span> Select Training Data</h2>
+            <h2 class="model-title" style="margin-top: 0px; font-weight: 400;">Model Builder</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h2 style="margin-top: 10px;"><span class="circle">1</span> Select Training Data</h2>
             <!-- <div class="vspace-small"></div> -->
           </div>
         </div>
@@ -196,19 +199,19 @@
 
 </div>
 
-<div class="row vspace-medium"></div>
+<div class="row vspace-small"></div>
 
 <div class="row">
   <div class="col-md-4">
     <h2 class="hyperparameter-title"><span class="circle">2</span> Select Model</h2>
     <p>
-      <b>DNN:</b> a dense neural network. <br>image classifier.
+      <b>MLP:</b> a multilayer perceptron <br>image classifier.
       <br>
       <b>CNN:</b> a convolutional neural network. <br>image classifier.
     </p>
     <div id="model-type" class="btn-group" data-toggle="buttons">
       <label class="btn btn-primary active">
-        <input type="radio" name="options" id="option1" autocomplete="off"> DNN
+        <input type="radio" name="options" id="option1" autocomplete="off"> MLP
       </label>
       <label class="btn btn-primary">
         <input type="radio" name="options" id="option2" autocomplete="off"> CNN
@@ -223,7 +226,7 @@
       <h2 class="hyperparameter-title"><span class="circle">3</span> Select Hyperparameters</h2>
     </div>
     <div class="hyperparameter display-inline-block">Initial Image</div>
-    <div class="row vspace-small"></div>
+    <!-- <div class="row vspace-small"></div> -->
     <div class="row">
 
         <div class="col-xs-3 col-md-3">
@@ -251,7 +254,7 @@
 
   <div class="col-md-3">
     <h2 class="hyperparameter-title" style="visibility: hidden; ">Hidden</h2>
-    <div class="hyperparameter display-inline-block">Step-size</div>
+    <div class="hyperparameter display-inline-block" style="margin-top: 5px;">Step-size</div>
     <!-- <div class="row vspace-small"></div> -->
     <br>
     <div id="step-size" class="btn-group" data-toggle="buttons">
@@ -269,7 +272,7 @@
     <div class="row vspace-small"></div>
 
         <!-- <h2 class="hyperparameter-title" style="visibility: hidden; ">Hidden</h2> -->
-    <div class="hyperparameter display-inline-block">Epoch Count</div>
+    <div class="hyperparameter display-inline-block"  style="margin-top: 5px;">Epoch Count</div>
     <!-- <div class="row vspace-small"></div> -->
     <br>
     <div id="epoch" class="btn-group" data-toggle="buttons">
@@ -293,7 +296,9 @@
 
   </div>
 </div>
-<div class="vspace-medium"></div>
+
+<div class="vspace-small"></div>
+
 <div class="row">
   <div class="col-md-4">
     <h2 class="hyperparameter-title"><span class="circle">4</span> Train and Draw</h2>
@@ -308,17 +313,16 @@
 
 </div>
 <div class="row vspace-small"></div>
-
-
+<!-- 
 <div class="row">
   <hr>
-</div>
+</div> -->
 
 
 <div id="results" class="row">
-<!--   <div class="col-md-12">
-    <h2>Results</h2>
-  </div> -->
+  <div class="col-md-12">
+    <h2 class="result-title" style="font-weight: 400;">Results</h2>
+  </div>
 
 <!--   <div class="row">
     <div class="col-md-1 display-inline-block" style="width: 5%">

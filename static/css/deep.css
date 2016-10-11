@@ -26,9 +26,21 @@ body {
     border: none;
     border-radius: none;
     padding: 3px;
-    max-width: 62px;
 }
 .thumbnail-small:hover {
+  box-shadow: 0 7px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+  border: none;
+  border-radius: none;
+}
+.thumbnail-smaller {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.16), 0 2px 4px rgba(0,0,0,0.23);
+    border: none;
+    border-radius: none;
+    padding: 2px;
+    max-width: 45px;
+    margin: 0 auto;
+}
+.thumbnail-smaller:hover {
   box-shadow: 0 7px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
   border: none;
   border-radius: none;
@@ -39,9 +51,9 @@ body {
 .thumbnail-result {
 	background-color: inherit; /*prevents result thumbnail from being clicked*/
 }
-
 .error-metric {
 	text-align: center;
+	font-size: 16px;
 }
 .error-metric:hover {
 	text-decoration: initial;
@@ -63,7 +75,12 @@ body {
 }
 .hyperparameter {
 	font-weight: 300;
-	font-size: 20px;
+	font-size: 22px;
+	color: #7f8c8d;
+}
+.hyperparameter-result {
+	font-weight: 300;
+	font-size: 22px;
 	color: #7f8c8d;
 }
 .hyperparameter-title {
@@ -80,9 +97,14 @@ hr {
   border-top: 1px solid #dddddd;
 }
 h2 {
-	font-weight: 400;
+	font-weight: 300;
 	/*font-size: 30px; prevents "Select Hyperparameters" from line breaking*/
 	/*color: #dddddd;*/
+}
+h3 {
+	margin-top: 10px;
+	/*font-size: 20px;*/
+	/*font-weight: 300;*/
 }
 img {
 	border: 1px solid #dddddd;
@@ -121,4 +143,32 @@ p {
 }*/
 p {
 	font-size: 16px;
+}
+.result-row-height {
+	line-height: 50px;
+	margin-bottom: 10px;
+}
+.result-title:after {
+    content: '';
+    display: inline-block;
+    height: 1px;
+    background: #dddddd;
+    width: 89%;
+    float: right;
+    margin-top: 15px;
+    margin-bottom: 35px;
+}
+.model-title:after {
+    content: '';
+    display: inline-block;
+    height: 1px;
+    background: #dddddd;
+    width: 81%;
+    float: right;
+    margin-top: 15px;
+    margin-bottom: 35px;
+}
+.btn {
+	font-size: 16px;
+	font-weight: 400;
 }

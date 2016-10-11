@@ -58,7 +58,7 @@ def preprocess(training_data_indicies):
     x_data = []
     y_data = []
 
-    num_of_pictures = 3 
+    num_of_pictures = 3
 
     blank = np.zeros([1,28,28])
     
@@ -172,7 +172,7 @@ def preprocess(training_data_indicies):
 
     s = list(range(X_train_new.shape[0]))
     random.shuffle(s) 
-    X2 = X_train_new[s] #+np.random.random(X_train_new.shape)*0.01
+    X2 = X_train_new[s]+np.random.random(X_train_new.shape)*0.01
     Y2 = Y_train_new[s]
     
     return X2, Y2
@@ -195,7 +195,7 @@ def build_and_train_model(X2, Y2, nb_classes, model_type, epoch):
     print(type(str(model_type)))
     print(len(str(model_type)))
 
-    if str(model_type).strip() == "DNN":
+    if str(model_type).strip() == "MLP":
         m = Flatten()(input)
         m = Dense(WIDTH, activation='tanh')(m)
         # m = Dropout(0.2)(m)

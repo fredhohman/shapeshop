@@ -55,10 +55,10 @@ $(function() {
                 console.log(data);
     			console.log(error);
 
-                if (number_of_times_clicked == 1) {
-                    d3.select("#results").append("div").attr("class", "col-md-12")
-                                         .append("h2").text("Results");
-                }
+                // if (number_of_times_clicked == 1) {
+                //     d3.select("#results").append("div").attr("class", "col-md-12")
+                //                          .append("h2").text("Results");
+                // }
 
                 var preResultsInitialImageIndex = initial_image_indicies.indexOf(1);
                 var preResultsInitialImage = ['zeros', 'ones', 'noise', 'noise_blur'][preResultsInitialImageIndex];
@@ -67,25 +67,29 @@ $(function() {
                 step_size = d3.select("#step-size > label.active").text();
                 epoch = Number(d3.select("#epoch > label.active").text());
                 
-                d3.select("#results").append("div").attr("class", "vspace-result");
+                d3.select("#results").append("div").attr("class", "vspace-small");
 
-                preResults = d3.select("#results").append("div").attr("class", "row");
+                preResults = d3.select("#results").append("div").attr("class", "col-md-12 result-row-height");
                 preResults.append("div").attr("class", "col-md-1 display-inline-block").style("width", "5%")
                           .append("h3").text("[" + String(number_of_times_clicked) + "]:");
                 preResults.append("div").attr("class", "col-md-1 display-inline-block")
-                          .append("a").attr("class", "thumbnail thumbnail-small thumbnail-result")
+                          .append("a").attr("class", "thumbnail thumbnail-smaller thumbnail-result")
                           .append("img").attr("src", "static/images/" + preResultsInitialImage + ".png");
-                preResultsModel = preResults.append("div").attr("class", "col-md-1 display-inline-block");
-                preResultsModel.append("p").attr("class", "hyperparameter display-inline-block").text("Model: ");
-                preResultsModel.append("p").attr("class", "hyperparameter display-inline-block").text(String(model_type).trim());
+                preResultsModel = preResults.append("div").attr("class", "col-md-10 display-inline-block");
+                preResultsModel.append("h3").attr("class", "hyperparameter-result display-inline-block").text("Model: " + String(model_type).trim() + ',');
 
-                preResultsHyperparameters = preResults.append("div").attr("class", "col-md-2 display-inline-block");
-                preResultsHyperparameters.append("p").attr("class", "hyperparameter display-inline-block").text("Step-size: " + String(step_size));
-                preResultsHyperparameters.append("p").attr("class", "hyperparameter display-inline-block").text("Epoch Count: " + String(epoch));
+                // preResultsHyperparameters = preResults.append("div").attr("class", "col-md-2 display-inline-block");
+                preResultsHyperparameters = preResultsModel;
+                preResultsHyperparameters.append("span").style("padding-right", "20px");
+                preResultsHyperparameters.append("h3").attr("class", "hyperparameter-result display-inline-block")
+                                                        .text("   ").text("Step-size: " + String(step_size).trim() + ',')
+                preResultsHyperparameters.append("span").style("padding-right", "20px");
+                preResultsHyperparameters.append("h3").attr("class", "hyperparameter-result display-inline-block")
+                                                        .text("   ").text("Epoch Count: " + String(epoch));
 
                 originalThumbBB = d3.select("#tdata0").node().getBoundingClientRect();
 
-    			results = d3.select("#results").append("div").attr("class", "row");
+    			results = d3.select("#results").append("div").attr("class", "row").style("padding-right", "15px").style("padding-left", "15px");
 
     			thumbnailEnter = results.selectAll(".thumbnail-result-div").data(data.errors).enter()
 		    		   .append("div").attr("class", "thumbnail-result-div")
@@ -95,6 +99,8 @@ $(function() {
 
 	    		thumbnailEnter.append("img").attr("src", function(d, i) {return "static/results/" + String(number_of_times_clicked) + '_' + (i+1) + ".png" + "?v=" + String(new Date().getTime()) });
 	    		thumbnailEnter.append("div").attr("class", "caption error-metric").text(function(d) { return d3.format(".2f")(d) });
+
+                results.append("hr");
 
 
     			console.log("made result row");
