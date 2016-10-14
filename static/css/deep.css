@@ -14,13 +14,15 @@ body {
 }
 .thumbnail {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    /*box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
     border: none;
     border-radius: 0; /*none*/
     padding: 0px; /*5*/
 }
 .thumbnail:hover {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-  /*box-shadow: 0 14px 28px #9ecaed, 0 10px 10px #9ecaed;*/
+  /*box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);*/
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  box-shadow: 0 10px 24px #9ecaed, 0 8px 8px #9ecaed;
   border: none;
   border-radius: none;
 }
@@ -31,7 +33,7 @@ body {
     padding: 0px; /*3*/
 }
 .thumbnail-small:hover {
-  box-shadow: 0 7px 10px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+  box-shadow: 0 7px 10px #9ecaed, 0 5px 5px #9ecaed;
   border: none;
   border-radius: none;
 }
@@ -51,7 +53,10 @@ body {
 .thumbnail-clicked {
 	background-color: #2196F3;
 	padding: 5px;
-	/*box-shadow: 0 10px 24px #9ecaed, 0 8px 8px #9ecaed;*/
+	box-shadow: 0 10px 24px #9ecaed, 0 5px 5px #9ecaed;
+}
+.thumbnail-clicked:hover {
+	box-shadow: 0 10px 24px #9ecaed, 0 5px 5px #2196F3;
 }
 .thumbnail-result {
 	background-color: inherit; /*prevents result thumbnail from being clicked*/
