@@ -25,7 +25,7 @@
     <body>
       <div class="jumbotron">
         <div class="container">
-          <h1>DeepShape</h1>
+          <h1 id="title-reload">ShapeShop</h1>
           <h3><i>Visualizing Learned Semantics in Simple Shapes with Deep Learning</i></h3>
           <!-- <h3>Codename: <b><i>DeepShape</i></b></h3> -->
           <!-- <p>Fred Hohman, Nathan Hodas, Polo Chau</p> -->
@@ -43,7 +43,7 @@
 
         <div class="row">
           <div class="col-md-12">
-            <h2 class="model-title" style="margin-top: 0px; font-weight: 400;">Model Builder</h2>
+            <h2 class="model-title" style="margin-top: 0px; font-weight: 600;">Model Builder</h2>
           </div>
         </div>
         <div class="row">
@@ -210,10 +210,10 @@
       <b>CNN:</b> a convolutional neural network.
     </p>
     <div id="model-type" class="btn-group" data-toggle="buttons">
-      <label class="btn btn-primary active">
+      <label class="btn btn-default active">
         <input type="radio" name="options" id="option1" autocomplete="off"> MLP
       </label>
-      <label class="btn btn-primary">
+      <label class="btn btn-default">
         <input type="radio" name="options" id="option2" autocomplete="off"> CNN
       </label>
 
@@ -252,19 +252,19 @@
     </div>
   </div>
 
-  <div class="col-md-3" style="border-left: solid 1px #dddddd">
+  <div class="col-md-4" style="border-left: solid 1px #dddddd">
     <!-- <h2 class="hyperparameter-title" style="visibility: hidden; ">Hidden</h2> -->
     <div class="hyperparameter display-inline-block" style="margin-top: 0px;">Step-size</div>
     <!-- <div class="row vspace-small"></div> -->
     <br>
     <div id="step-size" class="btn-group" data-toggle="buttons">
-      <label class="btn btn-primary">
+      <label class="btn btn-default">
         <input type="radio" name="options" id="option1" autocomplete="off"> 0.001
       </label>
-      <label class="btn btn-primary active">
+      <label class="btn btn-default active">
         <input type="radio" name="options" id="option2" autocomplete="off"> 0.005
       </label>
-      <label class="btn btn-primary">
+      <label class="btn btn-default">
         <input type="radio" name="options" id="option3" autocomplete="off"> 0.01
       </label>
     </div>
@@ -276,19 +276,19 @@
     <!-- <div class="row vspace-small"></div> -->
     <br>
     <div id="epoch" class="btn-group" data-toggle="buttons">
-      <label class="btn btn-primary">
+      <label class="btn btn-default">
         <input type="radio" name="options" id="option1" autocomplete="off"> 50
       </label>
-      <label class="btn btn-primary active">
+      <label class="btn btn-default active">
         <input type="radio" name="options" id="option2" autocomplete="off"> 100
       </label>
-      <label class="btn btn-primary">
+      <label class="btn btn-default">
         <input type="radio" name="options" id="option3" autocomplete="off"> 150
       </label>
-            <label class="btn btn-primary">
+            <label class="btn btn-default">
         <input type="radio" name="options" id="option3" autocomplete="off"> 200
       </label>
-            <label class="btn btn-primary">
+            <label class="btn btn-default">
         <input type="radio" name="options" id="option3" autocomplete="off"> 250
       </label>
     </div>
@@ -300,14 +300,14 @@
 <div class="vspace-small"></div>
 
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-12">
     <h2 class="hyperparameter-title"><span class="circle">4</span> Train and Draw</h2>
     <p>
       <b>Train</b> a neural network image classifier.
       <br>
       <b>Draw</b> each class by maximizing each output.
     </p>
-    <p><a id="train-and-draw" class="btn btn-primary btn-lg" href="#" role="button">Train and Draw</a></p>
+    <p><a id="train-and-draw" class="btn btn-success btn-lg" href="#" role="button">Train and Draw</a></p>
 
   </div>
 
@@ -321,7 +321,7 @@
 
 <div id="results" class="row">
   <div class="col-md-12">
-    <h2 class="result-title" style="font-weight: 400;">Results</h2>
+    <h2 class="result-title" style="font-weight: 600;">Results</h2>
   </div>
 
 <!--   <div class="row">
@@ -424,6 +424,9 @@
 </div> -->
 </div>
 
+<!-- <div> -->
+    <p><a id="scroll-to-top" class="btn btn-default btn-lg" href="#" role="button">Scroll to Top</a></p>
+<!-- </div> -->
 <div class="row vspace-large"></div>
 </div>
 

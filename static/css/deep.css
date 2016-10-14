@@ -4,11 +4,13 @@ body {
 }
 .jumbotron {
 	color: white;
-	background-image: linear-gradient(to bottom, #2980b9 0, #3498db 100%);
-	background-color: #2980b9;
+	/*background-image: linear-gradient(to bottom, #3498db 0, #3498db 100%);*/
+	background-color: #2196F3;
 }
 .jumbotron h1 {
-	font-size: 38px;
+	font-size: 42px;
+	/*color: #337ab7;*/
+	font-weight: 600;
 }
 .thumbnail {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -47,7 +49,7 @@ body {
   border-radius: none;
 }
 .thumbnail-clicked {
-	background-color: #2980b9;
+	background-color: #2196F3;
 	padding: 5px;
 	/*box-shadow: 0 10px 24px #9ecaed, 0 8px 8px #9ecaed;*/
 }
@@ -56,7 +58,7 @@ body {
 }
 .error-metric {
 	text-align: center;
-	font-size: 16px;
+	font-size: 19px;
 }
 .error-metric:hover {
 	text-decoration: initial;
@@ -78,12 +80,12 @@ body {
 }
 .hyperparameter {
 	font-weight: 300;
-	font-size: 22px;
+	font-size: 26px;
 	color: #7f8c8d;
 }
 .hyperparameter-result {
 	font-weight: 300;
-	font-size: 22px;
+	font-size: 26px;
 	color: #7f8c8d;
 }
 .hyperparameter-title {
@@ -101,34 +103,86 @@ hr {
 }
 h2 {
 	font-weight: 300;
-	/*font-size: 30px; prevents "Select Hyperparameters" from line breaking*/
+	font-size: 30px; /*prevents "Select Hyperparameters" from line breaking*/
 	/*color: #dddddd;*/
 }
 h3 {
 	margin-top: 10px;
-	/*font-size: 20px;*/
+	/*font-size: 24px;*/
 	/*font-weight: 300;*/
 }
 img {
 	/*border: 1px solid #dddddd;*/
 }
-p {
-	font-size: 14px;
-}
+
+/*.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+
+  background-color: #A6A8C1;
+  border-color: #31347B;
+ }
+
+.btn
+{
+  background-color: #9F418F;
+  border-color: #9F418F;
+}*/
+
 /*.btn-primary {
 	background-color: red;
+	border-color: yellow;
 }
 .btn-primary:hover {
-	background-color: gray;
+	background-color: green;
+	border-color: black;
 }
 .btn-primary.active {
-	background-color: green;
+	background-color: pink;
 }
 .btn-primary.active:hover {
-	background-color: yellow;
+	background-color: orange;
+}
+.btn-primary.active.focus:hover {
+	background-color: black;
+}
+.btn-primary.active.focus {
+	background-color: white;
+}
+.btn-primary.focus {
+	background-color: gray;
+}
+.btn-primary.focus {
+	background-color: red;
+}
+
+.btn {
+	background-color: red;
+	border-color: yellow;
+}
+.btn:hover {
+	background-color: green;
+	border-color: black;
+}
+.btn.active {
+	background-color: pink;
+}
+.btn.active:hover {
+	background-color: orange;
+}
+.btn.active.focus:hover {
+	background-color: black;
+}
+.btn.active.focus {
+	background-color: white;
+}
+.btn.focus {
+	background-color: gray;
+}
+.btn.focus {
+	background-color: red;
 }*/
+
 .circle {
-  background: #2980b9;
+  background: #2196F3;
   border-radius: 0.8em;
   -moz-border-radius: 0.8em;
   -webkit-border-radius: 0.8em;
@@ -151,7 +205,7 @@ p {
 	font-size: 18px;
 }*/
 p {
-	font-size: 16px;
+	font-size: 19px;
 }
 .result-row-height {
 	line-height: 50px;
@@ -178,6 +232,9 @@ p {
     margin-bottom: 35px;
 }
 .btn {
-	font-size: 16px;
+	font-size: 19px;
 	font-weight: 400;
+}
+#scroll-to-top {
+	visibility: hidden;
 }

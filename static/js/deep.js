@@ -11,6 +11,16 @@ $(function() {                       //run when the DOM is ready
   });
 });
 
+$(function() {
+    $("#scroll-to-top").click(function() {
+        $('html,body').animate({
+            scrollTop: 0
+        }, 400);
+    });
+});
+
+
+
 $('a.thumbnail').removeAttr('href');
 $('#train-and-draw').removeAttr('href');
 
@@ -102,6 +112,9 @@ $(function() {
 
                 results.append("hr");
 
+                if (number_of_times_clicked == 1) {
+                    d3.select("#scroll-to-top").style("visibility", "visible");
+                };
 
     			console.log("made result row");
 
