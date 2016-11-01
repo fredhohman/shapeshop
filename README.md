@@ -1,4 +1,4 @@
-# DeepShape
+# ShapeShop
 
 Description here. This will be updated eventually...
 
