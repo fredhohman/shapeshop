@@ -48,6 +48,27 @@ $(function() {
     	console.log(training_data_indicies);
     	console.log(initial_image_indicies);
 
+        if (d3.sum(training_data_indicies) < 2) {
+            alert("Choose at least 2 training images!");
+            $(document.body).css({"cursor": "default"});
+            number_of_times_clicked = number_of_times_clicked - 1;
+            return;
+        }
+
+        if (d3.sum(initial_image_indicies) == 0) {
+            alert("Choose an initial image!");
+            $(document.body).css({"cursor": "default"});
+            number_of_times_clicked = number_of_times_clicked - 1;
+            return;
+        }
+
+        if (d3.sum(initial_image_indicies) > 1) {
+            alert("Choose only 1 initial image!");
+            $(document.body).css({"cursor": "default"});
+            number_of_times_clicked = number_of_times_clicked - 1;
+            return;
+        }
+
         model_type = d3.select("#model-type > label.active").text();
         step_size = Number(d3.select("#step-size > label.active").text());
         epoch = Number(d3.select("#epoch > label.active").text());
