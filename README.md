@@ -10,7 +10,8 @@ Fred Hohman, Nathan Hodas, Duen Horng Chau.
 
 ## Requirements 
 
-### Python
+### Python (2.7)
+
 numpy==1.11.0  
 scipy==0.17.0  
 Flask==0.11.1  
