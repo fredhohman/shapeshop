@@ -92,6 +92,13 @@ def make_noise_img_no_blur(img_width, img_height):
 #######
 
 def boxify_top_left(mnist_X_train_sample):
+    """Create an image with a box in the top left hand corner. (28x28 pixels)
+        Args:
+            mnist_X_train_sample: a 28x28 image, can have MNIST digit information or be blank.
+
+        Returns:
+           image_with_box: the created image.
+   """
     image_with_box = mnist_X_train_sample
     image_with_box[0, 0:6, 0:6] = 1.0
     return image_with_box

@@ -55,6 +55,14 @@ import matplotlib.pyplot as plt
 # 1 = include in training data
 
 def preprocess(training_data_indicies):
+    """Builds the dataset. 
+        Args:
+            training_data_indicies: an array of 0s and 1s, where 1s indicate selected training images to include.  
+
+        Returns:
+           X2: the dataset.
+           Y2: the dataset labels.
+   """
     x_data = []
     y_data = []
 
@@ -178,6 +186,18 @@ def preprocess(training_data_indicies):
     return X2, Y2
 
 def build_and_train_model(X2, Y2, nb_classes, model_type, epoch):
+    """Builds and trains the neural network image classifier model. 
+        Args:
+            X2: the dataset.
+            Y2: the labels.
+            nb_classes: number of classes in the image classifier.
+            model_type: delineating between multilayer perceptron and convolutional neural network.
+            epoch: number of epochs for training.
+
+        Returns:
+           model: the trained model.
+           input: the input layer of the model. 
+   """
     batch_size = 4 
     nb_epoch = epoch
     img_rows, img_cols = 28, 28
@@ -229,6 +249,18 @@ def build_and_train_model(X2, Y2, nb_classes, model_type, epoch):
     return model, input
 
 def draw_images(img_num, model, input, initial_image_indicies, step_size):
+    """Performs the class activation maximization image drawing/generation process.
+        Args:
+            img_num: iterator for drawing multiple images.
+            model: the trained model.
+            input: the input layer of the trained model.
+            initial_image_indicies: specifies which image to initialize the image generation process.
+            step_size: the step_size used for gradient ascent.
+
+        Returns:
+           If success: True, the generated image.
+           If failure: False.
+   """
     
     # we build a loss function 
     loss = model.output[0,img_num]
@@ -329,7 +361,14 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
         return False    # did not draw an image
 
 def compute_error(training_data_indicies, results):
- 
+     """Computes the correlation coefficient for generated images.
+        Args:
+            training_data_indicies: an array of 0s and 1s, where 1s indicate selected training images to include.
+            results: the generated images.
+
+        Returns:
+           errors: correlation coefficients for each generated image.
+   """
 	x_data = []
 	blank = np.zeros([1,28,28])
 
@@ -374,6 +413,16 @@ def compute_error(training_data_indicies, results):
 	return errors[:,0]
 
 def save_image(data, cm, fn, dpi):
+     """Saves a generated image to disk.
+        Args:
+            data: the image to save.
+            cm = the colormap used when saving.
+            fn: file name.
+            dpi: resolution of saved image.
+
+        Returns:
+           None.
+   """
    
     sizes = np.shape(data)
     height = float(sizes[0])
@@ -389,8 +438,24 @@ def save_image(data, cm, fn, dpi):
     plt.savefig(fn, dpi = dpi) 
     plt.close()
 
+    return None
+
 def model(training_data_indicies, initial_image_indicies, number_of_times_clicked, step_size, model_type, epoch):
-	img_width = 28
+     """Computes the correlation coefficient for generated images.
+        Args:
+            training_data_indicies: an array of 0s and 1s, where 1s indicate selected training images to include.
+            initial_image_indicies: specifies which image to initialize the image generation process.
+            number_of_times_clicked: the experiment number.
+            step_size: the step_size used for gradient ascent.
+            model_type: delineating between multilayer perceptron and convolutional neural network.
+            epoch: number of epochs for training.
+
+        Returns:
+           results: the generated images.
+           errors: correlation coefficients for each generated image.
+
+   """
+    img_width = 28
 	img_height = 28
 
 	# training_data_indicies = np.array([1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1])

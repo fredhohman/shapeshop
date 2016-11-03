@@ -1,4 +1,5 @@
-# ShapeShop: Visualizing Learned Semantics with Deep Learning
+# ShapeShop
+*Visualizing Learned Semantics with Deep Learning*
 
 The Shape Workshop (**ShapeShop**) is an interactive system for visualizing and understanding what semantics a neural network model has learned in iamges consisting of simple shapes. It encourages model building, experimentation, and comparison to helps users explore the robustness of image classifiers. 
 
