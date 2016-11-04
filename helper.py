@@ -1,6 +1,15 @@
-# These functions won't work for arbitrarirly sized images!
-# The first batch is for VGG16.
-# The second batch is for MNIST (28,28).
+"""Create images with simple shapes for use in ShapeShop. (28x28 pixels)
+   The first batch is for VGG16.
+   The second batch is for MNIST.
+
+    Most function contain the following inputs and outputs:
+
+    Args:
+        mnist_X_train_sample: a 28x28 image, can have MNIST digit information or be blank.
+
+    Returns:
+       image: the created image.
+"""
 
 from scipy.misc import imsave, imresize
 import numpy as np
@@ -185,8 +194,6 @@ def triangulify_bottom_right(mnist_X_train_sample):
     image_with_tri[0, 28-7:28, 28-7:28] = tri
     
     return image_with_tri
-
-
 
 def boxify_center(mnist_X_train_sample):
     image_with_box = mnist_X_train_sample
