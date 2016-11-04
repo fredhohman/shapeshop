@@ -1,33 +1,37 @@
+"""Create images with simple shapes for use in ShapeShop. (28x28 pixels)
+    The first batch is for VGG16.
+    The second batch is for MNIST.
+   
+    Most function contain the following inputs and outputs:
+
+    Args:
+        mnist_X_train_sample: a 28x28 image, can have MNIST digit information or be blank.
+
+    Returns:
+       image: the created image.
+"""
+
 from __future__ import print_function
 from scipy.misc import imsave, imresize
 import numpy as np
 import time
 import os
 
-from keras.models import Sequential
-from keras.layers import *
-from keras.layers.advanced_activations import ELU
 from keras import backend as K
-
-from keras.models import Model
-
-from keras.layers.convolutional import (
-    Convolution2D,
-    MaxPooling2D,
-    AveragePooling2D
-)
-
-from keras.layers.normalization import BatchNormalization
-
 from keras.utils import np_utils
+from keras.models import Model, Sequential
+from keras.layers import *
+
+# from keras.layers.convolutional import (
+#     Convolution2D,
+#     MaxPooling2D,
+#     AveragePooling2D
+# )
 
 import scipy
 from scipy import ndimage
 from scipy.ndimage import imread
 
-from keras.datasets import mnist
-from keras.models import model_from_json
-import keras
 
 from time import sleep
 
@@ -361,59 +365,59 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
         return False    # did not draw an image
 
 def compute_error(training_data_indicies, results):
-     """Computes the correlation coefficient for generated images.
+    """Computes the correlation coefficient for generated images.
         Args:
             training_data_indicies: an array of 0s and 1s, where 1s indicate selected training images to include.
             results: the generated images.
 
         Returns:
            errors: correlation coefficients for each generated image.
-   """
-	x_data = []
-	blank = np.zeros([1,28,28])
+    """
+    x_data = []
+    blank = np.zeros([1,28,28])
 
-	# row 1
-	x_data.append(boxify_center(np.copy(blank)))
-	x_data.append(boxify_center_hollow(np.copy(blank)))
-	x_data.append(lineify_center(np.copy(blank)))
-	x_data.append(lineify_center_horizontal(np.copy(blank)))
-	x_data.append(circleify_center(np.copy(blank)))
-	x_data.append(circleify_center_hollow(np.copy(blank)))
-	x_data.append(triangulify_center(np.copy(blank)))
-	x_data.append(triangulify_center_hollow(np.copy(blank)))
-	# row 2
-	x_data.append(boxify_top_left(np.copy(blank)))
-	x_data.append(boxify_bottom_right(np.copy(blank)))
-	x_data.append(lineify_top_left(np.copy(blank)))
-	x_data.append(lineify_bottom_right(np.copy(blank)))
-	x_data.append(circleify_top_left(np.copy(blank)))
-	x_data.append(circleify_bottom_right(np.copy(blank)))
-	x_data.append(triangulify_top_left(np.copy(blank)))
-	x_data.append(triangulify_bottom_right(np.copy(blank)))
-	# row 3
-	x_data.append(noiseify())
-	x_data.append(noiseify_blur())
+    # row 1
+    x_data.append(boxify_center(np.copy(blank)))
+    x_data.append(boxify_center_hollow(np.copy(blank)))
+    x_data.append(lineify_center(np.copy(blank)))
+    x_data.append(lineify_center_horizontal(np.copy(blank)))
+    x_data.append(circleify_center(np.copy(blank)))
+    x_data.append(circleify_center_hollow(np.copy(blank)))
+    x_data.append(triangulify_center(np.copy(blank)))
+    x_data.append(triangulify_center_hollow(np.copy(blank)))
+    # row 2
+    x_data.append(boxify_top_left(np.copy(blank)))
+    x_data.append(boxify_bottom_right(np.copy(blank)))
+    x_data.append(lineify_top_left(np.copy(blank)))
+    x_data.append(lineify_bottom_right(np.copy(blank)))
+    x_data.append(circleify_top_left(np.copy(blank)))
+    x_data.append(circleify_bottom_right(np.copy(blank)))
+    x_data.append(triangulify_top_left(np.copy(blank)))
+    x_data.append(triangulify_bottom_right(np.copy(blank)))
+    # row 3
+    x_data.append(noiseify())
+    x_data.append(noiseify_blur())
 
-	training_data_indicies_nonzero = np.nonzero(training_data_indicies)[0]
-	errors = []
+    training_data_indicies_nonzero = np.nonzero(training_data_indicies)[0]
+    errors = []
 
-	for i in range(results.shape[0]):
+    for i in range(results.shape[0]):
 
-		# print(training_data_indicies)
-		# print(training_data_indicies_nonzero)
-		# print(training_data_indicies_nonzero[i])
-		org = x_data[training_data_indicies_nonzero[i]].flatten()
-		gen = results[i].flatten()
+        # print(training_data_indicies)
+        # print(training_data_indicies_nonzero)
+        # print(training_data_indicies_nonzero[i])
+        org = x_data[training_data_indicies_nonzero[i]].flatten()
+        gen = results[i].flatten()
 
-		error = pearsonr(org, gen)
-		errors.append(error)
+        error = pearsonr(org, gen)
+        errors.append(error)
 
-	errors = np.array(np.abs(errors))
+    errors = np.array(np.abs(errors))
 
-	return errors[:,0]
+    return errors[:,0]
 
 def save_image(data, cm, fn, dpi):
-     """Saves a generated image to disk.
+    """Saves a generated image to disk.
         Args:
             data: the image to save.
             cm = the colormap used when saving.
@@ -441,7 +445,7 @@ def save_image(data, cm, fn, dpi):
     return None
 
 def model(training_data_indicies, initial_image_indicies, number_of_times_clicked, step_size, model_type, epoch):
-     """Computes the correlation coefficient for generated images.
+    """Computes the correlation coefficient for generated images.
         Args:
             training_data_indicies: an array of 0s and 1s, where 1s indicate selected training images to include.
             initial_image_indicies: specifies which image to initialize the image generation process.
@@ -454,54 +458,43 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
            results: the generated images.
            errors: correlation coefficients for each generated image.
 
-   """
+    """
     img_width = 28
-	img_height = 28
+    img_height = 28
 
-	# training_data_indicies = np.array([1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1])
-	num_of_pictures = np.sum(training_data_indicies)
-	nb_classes = num_of_pictures
-	X2, Y2 = preprocess(training_data_indicies)
-	print(X2.shape)
-	print(Y2.shape)
+    # training_data_indicies = np.array([1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1])
+    num_of_pictures = np.sum(training_data_indicies)
+    nb_classes = num_of_pictures
+    X2, Y2 = preprocess(training_data_indicies)
+    print(X2.shape)
+    print(Y2.shape)
 
-	model, input = build_and_train_model(X2, Y2, nb_classes, model_type, epoch)
+    model, input = build_and_train_model(X2, Y2, nb_classes, model_type, epoch)
 
-	img_num = 0
-	results = []
-	errors = np.zeros(num_of_pictures)
+    img_num = 0
+    results = []
+    errors = np.zeros(num_of_pictures)
 
-	while img_num < num_of_pictures:
-	       
-	    start_time = time.time()
-	    print('START image', str(img_num))
+    while img_num < num_of_pictures:
+           
+        start_time = time.time()
+        print('START image', str(img_num))
 
-	    result_bool, img = draw_images(img_num, model, input, initial_image_indicies, step_size)
-	               
-	    end_time = time.time()
-	    print('END image', str(img_num) + ":", end_time - start_time)
+        result_bool, img = draw_images(img_num, model, input, initial_image_indicies, step_size)
+                   
+        end_time = time.time()
+        print('END image', str(img_num) + ":", end_time - start_time)
 
-	    if result_bool == True:
-	        img_num += 1
+        if result_bool == True:
+            img_num += 1
 
-	    # imsave("results/" + str(img_num) + '.png', 1-img)
-	    save_image(1-img,'gray','static/results/' + str(number_of_times_clicked) + '_' + str(img_num) + '.png', 500)
-	    results.append(1-img)
+        # imsave("results/" + str(img_num) + '.png', 1-img)
+        save_image(1-img,'gray','static/results/' + str(number_of_times_clicked) + '_' + str(img_num) + '.png', 500)
+        results.append(1-img)
 
-	results = np.array(results)
-	errors = compute_error(training_data_indicies, results)
+    results = np.array(results)
+    errors = compute_error(training_data_indicies, results)
 
-	return results, errors
+    return results, errors
 
 	    
-
-
-
-
-
-	            
-	 
-
-
-
-
