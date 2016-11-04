@@ -246,3 +246,8 @@ p {
 #scroll-to-top {
 	visibility: hidden;
 }
+#title-reload {
+	color: #FFFFFF;
+}
+#title-reload:hover {
+}
