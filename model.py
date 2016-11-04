@@ -1,45 +1,27 @@
-"""Create images with simple shapes for use in ShapeShop. (28x28 pixels)
-    The first batch is for VGG16.
-    The second batch is for MNIST.
-   
-    Most function contain the following inputs and outputs:
-
-    Args:
-        mnist_X_train_sample: a 28x28 image, can have MNIST digit information or be blank.
-
-    Returns:
-       image: the created image.
+"""The main code for:
+    * creating the training data,
+    * building and training the neural network model, 
+    * and image generation.
 """
 
 from __future__ import print_function
 from scipy.misc import imsave, imresize
 import numpy as np
 import time
+from time import sleep
 import os
+import random
 
 from keras import backend as K
 from keras.utils import np_utils
 from keras.models import Model, Sequential
 from keras.layers import *
-
-# from keras.layers.convolutional import (
-#     Convolution2D,
-#     MaxPooling2D,
-#     AveragePooling2D
-# )
+from keras.optimizers import SGD, RMSprop
 
 import scipy
 from scipy import ndimage
 from scipy.ndimage import imread
-
-
-from time import sleep
-
-import random
-
-from keras.initializations import normal, identity
-from keras.optimizers import SGD, RMSprop
-from random import randint
+from scipy.stats import pearsonr
 
 from helper import boxify_top_left, boxify_bottom_right
 from helper import lineify_top_left, lineify_bottom_right
@@ -48,15 +30,10 @@ from helper import triangulify_top_left, triangulify_bottom_right
 from helper import boxify_center, lineify_center, circleify_center, triangulify_center
 from helper import boxify_center_hollow, lineify_center_horizontal, circleify_center_hollow, triangulify_center_hollow
 from helper import noiseify, noiseify_blur
-
 from helper import normalize
 
-from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
 
-
-# 0 = do not include in training data
-# 1 = include in training data
 
 def preprocess(training_data_indicies):
     """Builds the dataset. 
@@ -64,9 +41,10 @@ def preprocess(training_data_indicies):
             training_data_indicies: an array of 0s and 1s, where 1s indicate selected training images to include.  
 
         Returns:
-           X2: the dataset.
-           Y2: the dataset labels.
+           X: the dataset.
+           Y: the dataset labels.
    """
+
     x_data = []
     y_data = []
 
@@ -76,6 +54,8 @@ def preprocess(training_data_indicies):
     
     num_total_training_images = len(training_data_indicies)
    
+    # 0 = do not include in training data
+    # 1 = include in training data
     for i in range(num_of_pictures):
     	counter = 0
         
@@ -175,25 +155,25 @@ def preprocess(training_data_indicies):
     nb_classes = np.sum(training_data_indicies)
     print(nb_classes)
 
-    X_train_new = np.array(x_data)
-    y_train_new = np.array(y_data)
+    X_temp = np.array(x_data)
+    y_temp = np.array(y_data)
 
-    print(X_train_new.shape)
-    print(y_train_new.shape)
-    Y_train_new = np_utils.to_categorical(y_train_new, nb_classes)
+    print(X_temp.shape)
+    print(y_temp.shape)
+    y_temp_2 = np_utils.to_categorical(y_temp, nb_classes)
 
-    s = list(range(X_train_new.shape[0]))
+    s = list(range(X_temp.shape[0]))
     random.shuffle(s) 
-    X2 = X_train_new[s]+np.random.random(X_train_new.shape)*0.01
-    Y2 = Y_train_new[s]
+    X = X_temp[s]+np.random.random(X_temp.shape)*0.01
+    Y = y_temp_2[s]
     
-    return X2, Y2
+    return X, Y
 
-def build_and_train_model(X2, Y2, nb_classes, model_type, epoch):
+def build_and_train_model(X, Y, nb_classes, model_type, epoch):
     """Builds and trains the neural network image classifier model. 
         Args:
-            X2: the dataset.
-            Y2: the labels.
+            X: the dataset.
+            Y: the labels.
             nb_classes: number of classes in the image classifier.
             model_type: delineating between multilayer perceptron and convolutional neural network.
             epoch: number of epochs for training.
@@ -206,7 +186,6 @@ def build_and_train_model(X2, Y2, nb_classes, model_type, epoch):
     nb_epoch = epoch
     img_rows, img_cols = 28, 28
     WIDTH = 64*2
-    num_layers = 8
 
     input = Input(batch_shape=(batch_size, 1, img_rows, img_cols))
     nb_filters = 32
@@ -248,7 +227,7 @@ def build_and_train_model(X2, Y2, nb_classes, model_type, epoch):
                   optimizer='adadelta', #'sgd'
                   metrics=['accuracy'])
 
-    model.fit(X2,Y2,batch_size=batch_size,nb_epoch=nb_epoch,validation_split=0.2,shuffle=True, verbose=2)
+    model.fit(X,Y,batch_size=batch_size,nb_epoch=nb_epoch,validation_split=0.2,shuffle=True, verbose=2)
     sleep(0.1)
     return model, input
 
@@ -269,12 +248,11 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
     # we build a loss function 
     loss = model.output[0,img_num]
     print(loss)
-#     loss = model.output[0][0,img_num]+model.output[1][0,1]
 
     img_width = 28
     img_height = 28
 
-    # we compute the gradient of the input picture wrt this loss
+    # we compute the gradient of the input picture with respect to this loss
     grads = K.gradients(loss, input)[0]
 
     # normalization trick: we normalize the gradient
@@ -283,14 +261,7 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
     # this function returns the loss and grads given the input picture
     iterate = K.function([input, K.learning_phase()], [loss, grads])
     
-    # random
-#	  input_img_data = np.copy(X_train[img_num][None,]) # starting with image in X_train
-#     input_img_data = np.copy(X_train[15][None,]) # starting with image in X_train
-#     input_img_data = ndimage.gaussian_filter(np.random.random((1, 1, img_width, img_height))*1.0, 1)
-#     input_img_data = np.random.random((1, 1, img_width, img_height))*0.5
-#     input_img_data = np.zeros([1,1,28,28])
-#     input_img_data = boxify_top_left_half(np.zeros([1, img_width, img_height]))[None,]
-
+    # create initial image
     if initial_image_indicies[0] == 1:
         input_img_data = np.zeros([1, 1, img_width, img_height])
         print("initial image is zeros")
@@ -309,7 +280,6 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
     
     # we run gradient ascent    
     step = step_size
-    # step = 0.005 
     switched_on = True # should be False for drawing VGG pictures
     NUM_ITERS = 2
     INIT_STEP = 300
@@ -343,14 +313,13 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
                 input_img_data += grads_value * step
 
                 if loss_value > 0.999: #+1 #for multiple
-#                     img = deprocess_image(np.copy(input_img_data[0]))
+                    # img = deprocess_image(np.copy(input_img_data[0]))
                     img = 1-input_img_data[0,0]
-                    # imsave('/Users/fredhohman/Desktop/pnnl/ubuntu-vm/Desktop/data/binary-net/mnist-box/testing/' + str(loop_num) + '/box_' + str(img_num) + '.png', img)
                     loss_value, grads_value = iterate([input_img_data, L_PHASE])
                     print('Current loss value:', loss_value,'- Current intensity:', np.mean(input_img_data))
                     
-#                     plt.imshow(input_img_data[0,0], cmap='gray')
-#                     plt.show()
+                    # plt.imshow(input_img_data[0,0], cmap='gray')
+                    # plt.show()
 
                     return True, img   # draw an image
             # if INIT_STEP % 300 == 0: 
@@ -462,14 +431,13 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
     img_width = 28
     img_height = 28
 
-    # training_data_indicies = np.array([1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1])
     num_of_pictures = np.sum(training_data_indicies)
     nb_classes = num_of_pictures
-    X2, Y2 = preprocess(training_data_indicies)
-    print(X2.shape)
-    print(Y2.shape)
+    X, Y = preprocess(training_data_indicies)
+    print(X.shape)
+    print(Y.shape)
 
-    model, input = build_and_train_model(X2, Y2, nb_classes, model_type, epoch)
+    model, input = build_and_train_model(X, Y, nb_classes, model_type, epoch)
 
     img_num = 0
     results = []
@@ -488,7 +456,6 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
         if result_bool == True:
             img_num += 1
 
-        # imsave("results/" + str(img_num) + '.png', 1-img)
         save_image(1-img,'gray','static/results/' + str(number_of_times_clicked) + '_' + str(img_num) + '.png', 500)
         results.append(1-img)
 
