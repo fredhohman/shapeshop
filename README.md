@@ -1,7 +1,7 @@
 # ShapeShop
 *Visualizing Learned Semantics with Deep Learning*
 
-The Shape Workshop (**ShapeShop**) is an interactive system for visualizing and understanding what semantics a neural network model has learned in iamges consisting of simple shapes. It encourages model building, experimentation, and comparison to helps users explore the robustness of image classifiers. 
+The Shape Workshop (**ShapeShop**) is an interactive system for visualizing and understanding what semantics a neural network model has learned in images consisting of simple shapes. It encourages model building, experimentation, and comparison to helps users explore the robustness of image classifiers. 
 
 **ShapeShop: Visualizing Learned Semantics with Deep Learning**  
 Fred Hohman, Nathan Hodas, Duen Horng Chau.  
@@ -22,7 +22,7 @@ matplotlib==1.5.1
 
 For Keras, we use the Theano backend. See [keras.io/backend](https://keras.io/backend/) for how to change backend.
 
-### Javascript
+### JavaScript
 D3 4.0 (loaded via web)  
 jQuery 1.12.4 (loaded via web)
 
