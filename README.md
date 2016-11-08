@@ -3,10 +3,6 @@
 
 The Shape Workshop (**ShapeShop**) is an interactive system for visualizing and understanding what semantics a neural network model has learned in images consisting of simple shapes. It encourages model building, experimentation, and comparison to helps users explore the robustness of image classifiers. 
 
-**ShapeShop: Visualizing Learned Semantics with Deep Learning**  
-Fred Hohman, Nathan Hodas, Duen Horng Chau.  
-*Workshop on the Future of Interactive Learning Machines at Neural Information Processing Systems (NIPS).* Dec 9, 2016. Barcelona, Spain. *Under review.*
-
 ![UI](images/ui.png)
 
 ## Requirements 
@@ -60,6 +56,3 @@ MIT License. See [`LICENSE.md`](LICENSE.md).
 
 For questions and support contact [Fred Hohman](http://www.fredhohman.com).
 
-**ShapeShop: Visualizing Learned Semantics with Deep Learning**  
-Fred Hohman, Nathan Hodas, Duen Horng Chau.  
-*Workshop on the Future of Interactive Learning Machines at Neural Information Processing Systems (NIPS).* Dec 9, 2016. Barcelona, Spain. *Under review.*
