@@ -443,7 +443,6 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
 
     img_num = 0
     results = []
-    # errors = np.zeros(num_of_pictures)
 
     while img_num < num_of_pictures:
            
