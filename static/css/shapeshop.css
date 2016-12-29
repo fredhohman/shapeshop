@@ -64,13 +64,6 @@ body {
 .thumbnail-result:hover {
 	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
-.error-metric {
-	text-align: center;
-	font-size: 19px;
-}
-.error-metric:hover {
-	text-decoration: initial;
-}
 .vspace-large {
 	height: 100px;
 }
@@ -250,4 +243,26 @@ p {
 	color: #FFFFFF;
 }
 #title-reload:hover {
+}
+
+.result-caption {
+	padding:0px;
+	margin:0px;
+}
+.original-image {
+	display: inline-block;
+	width: 40%;
+	margin: 5%;
+}
+.error-metric {
+	text-align: center;
+	font-size: 19px;
+	width: 40%;
+	margin-left: 5%;
+	margin-right: 5%;
+	display: inline-block;
+	color: #333;
+}
+.error-metric:hover {
+	text-decoration: initial;
 }

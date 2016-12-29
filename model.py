@@ -48,7 +48,7 @@ def preprocess(training_data_indicies):
     x_data = []
     y_data = []
 
-    num_of_pictures = 3
+    num_of_pictures = 10
 
     blank = np.zeros([1,28,28])
     
@@ -187,7 +187,7 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
     img_rows, img_cols = 28, 28
     WIDTH = 64*2
 
-    input = Input(batch_shape=(batch_size, 1, img_rows, img_cols))
+    input = Input(shape=(1, img_rows, img_cols))
     nb_filters = 32
     # size of pooling area for max pooling
     pool_size = (2, 2)
@@ -226,7 +226,9 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
     model.compile(loss='categorical_crossentropy',
                   optimizer='adadelta', #'sgd'
                   metrics=['accuracy'])
-
+    
+    print(model.summary())
+    
     model.fit(X,Y,batch_size=batch_size,nb_epoch=nb_epoch,validation_split=0.2,shuffle=True, verbose=2)
     sleep(0.1)
     return model, input
@@ -244,7 +246,7 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
            If success: True, the generated image.
            If failure: False.
    """
-    
+
     # we build a loss function 
     loss = model.output[0,img_num]
     print(loss)
@@ -301,8 +303,8 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
 
         for rep in range(0,INIT_STEP):
             for j in range(1,(nsteps+1 + idx)):#/((i+1))):
-                
-                loss_value, grads_value = iterate([input_img_data,L_PHASE])
+
+                loss_value, grads_value = iterate([input_img_data, L_PHASE])
 
                 # temp = np.copy(grads_value[:, (img_width*(0.5-0.5*j/nsteps)):(img_width*(0.5+0.5*j/nsteps)),
                 #                               (img_height*(0.5-0.5*j/nsteps)):(img_height*(0.5+0.5*j/nsteps))])
@@ -383,7 +385,7 @@ def compute_error(training_data_indicies, results):
 
     errors = np.array(np.abs(errors))
 
-    return errors[:,0]
+    return errors[:,0], training_data_indicies_nonzero
 
 def save_image(data, cm, fn, dpi):
     """Saves a generated image to disk.
@@ -441,7 +443,7 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
 
     img_num = 0
     results = []
-    errors = np.zeros(num_of_pictures)
+    # errors = np.zeros(num_of_pictures)
 
     while img_num < num_of_pictures:
            
@@ -460,8 +462,8 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
         results.append(1-img)
 
     results = np.array(results)
-    errors = compute_error(training_data_indicies, results)
+    errors, training_data_indicies_nonzero = compute_error(training_data_indicies, results)
 
-    return results, errors
+    return results, errors, training_data_indicies_nonzero
 
 	    

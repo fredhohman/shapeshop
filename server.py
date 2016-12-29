@@ -13,29 +13,35 @@ def index():
 
 @app.route('/run/', methods=['POST'])
 def run():
-	if request.method == 'POST':
-		training_data_indicies = json.loads(request.data)["training_data_indicies"]
-		print(training_data_indicies)
-		print(type(training_data_indicies))
+    if request.method == 'POST':
+        training_data_indicies = json.loads(request.data)["training_data_indicies"]
+        print(training_data_indicies)
+        print(type(training_data_indicies))
 
-		initial_image_indicies = json.loads(request.data)["initial_image_indicies"]
-		print(initial_image_indicies)
-		print(type(initial_image_indicies))
+        initial_image_indicies = json.loads(request.data)["initial_image_indicies"]
+        print(initial_image_indicies)
+        print(type(initial_image_indicies))
 
-		number_of_times_clicked = json.loads(request.data)["number_of_times_clicked"]
-		step_size = json.loads(request.data)["step_size"]
+        number_of_times_clicked = json.loads(request.data)["number_of_times_clicked"]
+        step_size = json.loads(request.data)["step_size"]
 
-		model_type = json.loads(request.data)["model_type"]
-		epoch = json.loads(request.data)["epoch"]
+        model_type = json.loads(request.data)["model_type"]
+        epoch = json.loads(request.data)["epoch"]
 
-		results, errors = model.model(training_data_indicies, initial_image_indicies, number_of_times_clicked, step_size, model_type, epoch)
+        results, errors, training_data_indicies_nonzero = model.model(training_data_indicies, 
+                                      initial_image_indicies, 
+                                      number_of_times_clicked, 
+                                      step_size, 
+                                      model_type, 
+                                      epoch)
 
-		results = results.tolist()
-		errors = errors.tolist()
+        results = results.tolist()
+        errors = errors.tolist()
+        training_data_indicies_nonzero = training_data_indicies_nonzero.tolist()
 
-		return json.dumps({'results': results, 'errors': errors})
+        return json.dumps({'results': results, 'errors': errors, 'training_data_indicies_nonzero': training_data_indicies_nonzero})
 
-	return None
+    return None
 
 
 if __name__ == "__main__":

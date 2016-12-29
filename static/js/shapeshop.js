@@ -2,6 +2,25 @@ training_data_indicies = new Array(18).fill(0);
 initial_image_indicies = new Array(4).fill(0);
 var number_of_times_clicked = 0;
 
+training_data_shape_names = ['box',
+                            'box_hollow',
+                            'line',
+                            'line_horizontal',
+                            'circle',
+                            'circle_hollow',
+                            'tri',
+                            'tri_hollow',
+                            'tl',
+                            'br',
+                            'line_tl',
+                            'line_br',
+                            'circle_tl',
+                            'circle_br',
+                            'tri_tl',
+                            'tri_br',
+                            'noise',
+                            'noise_blur']
+
 console.log(typeof(new Date().getTime()));
 
 $(function() {                       //run when the DOM is ready
@@ -86,6 +105,8 @@ $(function() {
                 console.log(data);
     			console.log(error);
 
+                var training_data_indicies_nonzero = data.training_data_indicies_nonzero;
+
                 // if (number_of_times_clicked == 1) {
                 //     d3.select("#results").append("div").attr("class", "col-md-12")
                 //                          .append("h2").text("Results");
@@ -128,8 +149,21 @@ $(function() {
                        .style("display", "inline-block").style("padding-left", "15px").style("padding-right", "15px")
 	    		       .append("a").attr("class", "thumbnail thumbnail-result");
 
-	    		thumbnailEnter.append("img").attr("src", function(d, i) {return "static/results/" + String(number_of_times_clicked) + '_' + (i+1) + ".png" + "?v=" + String(new Date().getTime()) });
-	    		thumbnailEnter.append("div").attr("class", "caption error-metric").text(function(d) { return d3.format(".2f")(d) });
+	    		thumbnailEnter.append("img").attr("src", function(d, i) {
+                    return "static/results/" + String(number_of_times_clicked) + '_' + (i+1) + ".png" 
+                           + "?v=" + String(new Date().getTime()) 
+                });
+                thumbnailEnterCaption = thumbnailEnter.append("div").attr("class", "result-caption");
+
+                console.log(training_data_shape_names[training_data_indicies_nonzero[function(d, i) {return i }]]);
+
+                thumbnailEnterCaption.append("div").attr('class', 'original-image')
+                                     .append('img').attr('src', function(d, i){
+                    return 'static/images/' + String(training_data_shape_names[training_data_indicies_nonzero[i]]) + '.png';
+                })
+                                     .attr('width', '100%');
+
+                thumbnailEnterCaption.append("div").attr("class", "error-metric").text(function(d) { return d3.format(".2f")(d) });
 
                 results.append("hr");
 
