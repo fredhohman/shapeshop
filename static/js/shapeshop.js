@@ -122,19 +122,25 @@ $(function() {
                 d3.select("#results").append("div").attr("class", "vspace-small");
 
                 preResults = d3.select("#results").append("div").attr("class", "col-md-12 result-row-height");
-                preResults.append("div").attr("class", "col-md-1 display-inline-block").style("width", "5%")
+                preResults.append("div").attr("class", "col-md-1 display-inline-block").style("width", "5%").style('padding-top', '10px')
                           .append("h3").text("[" + String(number_of_times_clicked) + "]:");
-                preResults.append("div").attr("class", "col-md-1 display-inline-block")
-                          .append("a").attr("class", "thumbnail thumbnail-smaller thumbnail-result")
-                          .append("img").attr("src", "static/images/" + preResultsInitialImage + ".png");
+                // preResults.append("div").attr("class", "col-md-1 display-inline-block")
+                //           .append("a").attr("class", "thumbnail thumbnail-smaller thumbnail-result")
+                //           .append("img").attr("src", "static/images/" + preResultsInitialImage + ".png");
                 preResultsModel = preResults.append("div").attr("class", "col-md-10 display-inline-block");
                 preResultsModel.append("h3").attr("class", "hyperparameter-result display-inline-block").text("Model: " + String(model_type).trim() + ',');
 
                 // preResultsHyperparameters = preResults.append("div").attr("class", "col-md-2 display-inline-block");
                 preResultsHyperparameters = preResultsModel;
                 preResultsHyperparameters.append("span").style("padding-right", "20px");
+                preResultsHyperparameters.append('div').style('width', '50px').attr('class','display-inline-block')
+                                         .append("a").attr("class", "thumbnail thumbnail-smaller thumbnail-result")
+                                         .append("img").attr("src", "static/images/" + preResultsInitialImage + ".png").attr('width','100%');
                 preResultsHyperparameters.append("h3").attr("class", "hyperparameter-result display-inline-block")
-                                                        .text("   ").text("Step-size: " + String(step_size).trim() + ',')
+                                                        .text(',');                
+                preResultsHyperparameters.append("span").style("padding-right", "20px");
+                preResultsHyperparameters.append("h3").attr("class", "hyperparameter-result display-inline-block")
+                                                        .text("   ").text("Step-size: " + String(step_size).trim() + ',');
                 preResultsHyperparameters.append("span").style("padding-right", "20px");
                 preResultsHyperparameters.append("h3").attr("class", "hyperparameter-result display-inline-block")
                                                         .text("   ").text("Epoch Count: " + String(epoch));
@@ -159,8 +165,7 @@ $(function() {
 
                 thumbnailEnterCaption.append("div").attr('class', 'original-image')
                                      .append('img').attr('src', function(d, i){
-                    return 'static/images/' + String(training_data_shape_names[training_data_indicies_nonzero[i]]) + '.png';
-                })
+                                        return 'static/images/' + String(training_data_shape_names[training_data_indicies_nonzero[i]]) + '.png';})
                                      .attr('width', '100%');
 
                 thumbnailEnterCaption.append("div").attr("class", "error-metric").text(function(d) { return d3.format(".2f")(d) });
