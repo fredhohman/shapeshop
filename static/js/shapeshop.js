@@ -1,4 +1,4 @@
-training_data_indicies = new Array(18).fill(0);
+training_data_indicies = new Array(19).fill(0);
 initial_image_indicies = new Array(4).fill(0);
 var number_of_times_clicked = 0;
 
@@ -19,7 +19,8 @@ training_data_shape_names = ['box',
                             'tri_tl',
                             'tri_br',
                             'noise',
-                            'noise_blur']
+                            'noise_blur',
+                            'house']
 
 console.log(typeof(new Date().getTime()));
 
@@ -122,18 +123,15 @@ $(function() {
                 d3.select("#results").append("div").attr("class", "vspace-small");
 
                 preResults = d3.select("#results").append("div").attr("class", "col-md-12 result-row-height");
-                preResults.append("div").attr("class", "col-md-1 display-inline-block").style("width", "5%").style('padding-top', '10px')
+                preResults.append("div").attr("class", "col-md-1 display-inline-block").style("width", "5%").style('padding-top', '3px')
                           .append("h3").text("[" + String(number_of_times_clicked) + "]:");
-                // preResults.append("div").attr("class", "col-md-1 display-inline-block")
-                //           .append("a").attr("class", "thumbnail thumbnail-smaller thumbnail-result")
-                //           .append("img").attr("src", "static/images/" + preResultsInitialImage + ".png");
+
                 preResultsModel = preResults.append("div").attr("class", "col-md-10 display-inline-block");
                 preResultsModel.append("h3").attr("class", "hyperparameter-result display-inline-block").text("Model: " + String(model_type).trim() + ',');
 
-                // preResultsHyperparameters = preResults.append("div").attr("class", "col-md-2 display-inline-block");
                 preResultsHyperparameters = preResultsModel;
                 preResultsHyperparameters.append("span").style("padding-right", "20px");
-                preResultsHyperparameters.append('div').style('width', '50px').attr('class','display-inline-block')
+                preResultsHyperparameters.append('div').style('width', '30px').attr('class','display-inline-block')
                                          .append("a").attr("class", "thumbnail thumbnail-smaller thumbnail-result")
                                          .append("img").attr("src", "static/images/" + preResultsInitialImage + ".png").attr('width','100%');
                 preResultsHyperparameters.append("h3").attr("class", "hyperparameter-result display-inline-block")

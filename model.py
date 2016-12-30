@@ -30,6 +30,7 @@ from helper import triangulify_top_left, triangulify_bottom_right
 from helper import boxify_center, lineify_center, circleify_center, triangulify_center
 from helper import boxify_center_hollow, lineify_center_horizontal, circleify_center_hollow, triangulify_center_hollow
 from helper import noiseify, noiseify_blur
+from helper import house
 from helper import normalize
 
 import matplotlib.pyplot as plt
@@ -149,6 +150,11 @@ def preprocess(training_data_indicies):
             
         if training_data_indicies[17%num_total_training_images] == 1:
             x_data.append(noiseify_blur())
+            y_data.append(counter)
+            counter = counter + 1
+
+        if training_data_indicies[18%num_total_training_images] == 1:
+            x_data.append(house(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
         
@@ -368,6 +374,7 @@ def compute_error(training_data_indicies, results):
     # row 3
     x_data.append(noiseify())
     x_data.append(noiseify_blur())
+    x_data.append(house(np.copy(blank)))
 
     training_data_indicies_nonzero = np.nonzero(training_data_indicies)[0]
     errors = []

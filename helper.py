@@ -369,7 +369,7 @@ def house(mnist_X_train_sample):
     shifted_tri = np.roll(tri[0], -7, axis=0)
 
     image_with_house = shifted_box + shifted_tri
-    return image_with_house
+    return image_with_house[None,]
 
 def save_image(data, cm, fn, dpi):
    
