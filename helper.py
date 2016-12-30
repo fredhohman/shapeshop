@@ -355,3 +355,34 @@ def boxify_top_left_half(mnist_X_train_sample):
     image_with_box = mnist_X_train_sample
     image_with_box[0, 3:6, 3:6] = 1.0
     return image_with_box
+
+######
+#MISC#
+######
+
+def house(mnist_X_train_sample):
+    image_with_house = mnist_X_train_sample
+    box = boxify_center(np.zeros([1,28,28]))
+    shifted_box = np.roll(box[0], 5, axis=0)
+
+    tri = triangulify_center(np.zeros([1,28,28]))
+    shifted_tri = np.roll(tri[0], -7, axis=0)
+
+    image_with_house = shifted_box + shifted_tri
+    return image_with_house
+
+def save_image(data, cm, fn, dpi):
+   
+    sizes = np.shape(data)
+    height = float(sizes[0])
+    width = float(sizes[1])
+     
+    fig = plt.figure()
+    fig.set_size_inches(width/height, 1, forward=False)
+    ax = plt.Axes(fig, [0., 0., 1., 1.])
+    ax.set_axis_off()
+    fig.add_axes(ax)
+ 
+    ax.matshow(data, cmap=cm)
+    plt.savefig(fn, dpi = dpi) 
+    plt.close()
