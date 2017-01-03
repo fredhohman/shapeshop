@@ -120,7 +120,7 @@ $(function() {
                 step_size = d3.select("#step-size > label.active").text();
                 epoch = Number(d3.select("#epoch > label.active").text());
                 
-                d3.select("#results").append("div").attr("class", "vspace-small");
+                // d3.select("#results").append("div").attr("class", "vspace-small");
 
                 preResults = d3.select("#results").append("div").attr("class", "col-md-12 result-row-height");
                 preResults.append("div").attr("class", "col-md-1 display-inline-block").style("width", "5%").style('padding-top', '0px')

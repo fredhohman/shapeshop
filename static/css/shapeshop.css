@@ -248,24 +248,28 @@ p {
 .result-caption {
 	padding:0px;
 	margin:0px;
+	height: 60px;
+
 }
 .original-image {
 	display: inline-block;
-	width: 25%;
-	margin: 5%;
+	width: 40px;
+	margin: 0px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 .error-metric {
 	text-align: center;
-	font-size: 19px;
-	width: 40%;
-	margin-left: 5%;
-	margin-right: 5%;
+	font-size: 22px;
 	display: inline-block;
 	color: #333;
+	height: 50px;
+	line-height: 50px;
 }
 .error-metric:hover {
 	text-decoration: initial;
 }
+
 #results h2 {
 	padding-top: 0px;
 	margin-top: 0px;
