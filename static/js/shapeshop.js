@@ -123,7 +123,7 @@ $(function() {
                 d3.select("#results").append("div").attr("class", "vspace-small");
 
                 preResults = d3.select("#results").append("div").attr("class", "col-md-12 result-row-height");
-                preResults.append("div").attr("class", "col-md-1 display-inline-block").style("width", "5%").style('padding-top', '3px')
+                preResults.append("div").attr("class", "col-md-1 display-inline-block").style("width", "5%").style('padding-top', '0px')
                           .append("h3").text("[" + String(number_of_times_clicked) + "]:");
 
                 preResultsModel = preResults.append("div").attr("class", "col-md-10 display-inline-block");

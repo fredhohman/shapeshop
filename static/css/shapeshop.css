@@ -227,10 +227,10 @@ p {
     display: inline-block;
     height: 1px;
     background: #dddddd;
-    width: 81%;
+    width: 69%;
     float: right;
     margin-top: 15px;
-    margin-bottom: 35px;
+    /*margin-bottom: 35px;*/
 }
 .btn {
 	font-size: 19px;
