@@ -248,8 +248,8 @@ p {
 .result-caption {
 	padding:0px;
 	margin:0px;
-	height: 60px;
-
+	/*height: 60px;*/
+	padding: 5px 0px;
 }
 .original-image {
 	display: inline-block;
@@ -265,6 +265,7 @@ p {
 	color: #333;
 	height: 50px;
 	line-height: 50px;
+	vertical-align: middle
 }
 .error-metric:hover {
 	text-decoration: initial;
