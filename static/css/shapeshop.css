@@ -220,7 +220,7 @@ p {
     width: 83%;
     float: right;
     margin-top: 15px;
-    margin-bottom: 35px;
+    /*margin-bottom: 35px;*/
 }
 .model-title:after {
     content: '';
@@ -265,4 +265,8 @@ p {
 }
 .error-metric:hover {
 	text-decoration: initial;
+}
+#results h2 {
+	padding-top: 0px;
+	margin-top: 0px;
 }
