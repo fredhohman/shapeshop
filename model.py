@@ -58,7 +58,7 @@ def preprocess(training_data_indicies):
     # 0 = do not include in training data
     # 1 = include in training data
     for i in range(num_of_pictures):
-    	counter = 0
+        counter = 0
         
         # row 1
         if training_data_indicies[0%num_total_training_images] == 1:
@@ -294,7 +294,7 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
     L_PHASE = 0
     DROPOUT_RATE = 0.5
     nsteps = 2
-    loss_value = None
+    loss_value = 0.0
     idx = 0
 #     for idx in range(NUM_ITERS):
     while loss_value < 0.99:
@@ -472,4 +472,4 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
 
     return results, errors, training_data_indicies_nonzero
 
-	    
+        

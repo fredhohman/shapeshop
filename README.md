@@ -7,16 +7,17 @@ The Shape Workshop (**ShapeShop**) is an interactive system for visualizing and 
 
 ## Requirements 
 
-### Python (2.7)
+### Python (3.5)
 
 numpy==1.11.0  
 scipy==0.17.0  
 Flask==0.11.1  
 Keras==1.1.1  
-Theano==0.8.2  
-matplotlib==1.5.1
+Tensorflow==0.12.1  
+matplotlib==1.5.1  
+noise==1.2.1
 
-For Keras, we use the Theano backend. See [keras.io/backend](https://keras.io/backend/) for how to change backend.
+For Keras, we use the Tensorflow backend. See [keras.io/backend](https://keras.io/backend/) for how to change backend.
 
 ### JavaScript
 D3 4.0 (loaded via web)  
