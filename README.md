@@ -48,6 +48,12 @@ To use ShapeShop, follow the enumerated steps.
 
 ShapeShop uses the class activation maximization visualization technique to maximize each class to produce N images, each corresponding to one class. The system then presents all N resulting images and correlation coefficients back to the user for visual inspection and comparison. This process then repeats, where the user can select different images to train on, produce more images from new models, and compare to the previous results.
 
+## Citation
+
+```
+
+```
+
 ## License
 
 MIT License. See [`LICENSE.md`](LICENSE.md).
@@ -55,4 +61,3 @@ MIT License. See [`LICENSE.md`](LICENSE.md).
 ## Credits 
 
 For questions and support contact [Fred Hohman](http://www.fredhohman.com).
-
