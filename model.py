@@ -1,11 +1,10 @@
 """The main code for:
     * creating the training data,
-    * building and training the neural network model, 
+    * building and training the neural network model,
     * and image generation.
 """
 
 from __future__ import print_function
-from scipy.misc import imsave, imresize
 import numpy as np
 import time
 from time import sleep
@@ -14,13 +13,11 @@ import random
 
 from keras import backend as K
 from keras.utils import np_utils
-from keras.models import Model, Sequential
+from keras.models import Model
 from keras.layers import *
-from keras.optimizers import SGD, RMSprop
 
 import scipy
 from scipy import ndimage
-from scipy.ndimage import imread
 from scipy.stats import pearsonr
 
 from helper import boxify_top_left, boxify_bottom_right
@@ -37,9 +34,9 @@ import matplotlib.pyplot as plt
 
 
 def preprocess(training_data_indicies):
-    """Builds the dataset. 
+    """Builds the dataset.
         Args:
-            training_data_indicies: an array of 0s and 1s, where 1s indicate selected training images to include.  
+            training_data_indicies: an array of 0s and 1s, where 1s indicate selected training images to include.
 
         Returns:
            X: the dataset.
@@ -51,113 +48,113 @@ def preprocess(training_data_indicies):
 
     num_of_pictures = 10
 
-    blank = np.zeros([1,28,28])
-    
+    blank = np.zeros([1, 28, 28])
+
     num_total_training_images = len(training_data_indicies)
-   
+
     # 0 = do not include in training data
     # 1 = include in training data
     for i in range(num_of_pictures):
         counter = 0
-        
+
         # row 1
-        if training_data_indicies[0%num_total_training_images] == 1:
+        if training_data_indicies[0 % num_total_training_images] == 1:
             x_data.append(boxify_center(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
 
-        if training_data_indicies[1%num_total_training_images] == 1:
+        if training_data_indicies[1 % num_total_training_images] == 1:
             x_data.append(boxify_center_hollow(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-            
-        if training_data_indicies[2%num_total_training_images] == 1:
+
+        if training_data_indicies[2 % num_total_training_images] == 1:
             x_data.append(lineify_center(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-            
-        if training_data_indicies[3%num_total_training_images] == 1:
+
+        if training_data_indicies[3 % num_total_training_images] == 1:
             x_data.append(lineify_center_horizontal(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-            
-        if training_data_indicies[4%num_total_training_images] == 1:
+
+        if training_data_indicies[4 % num_total_training_images] == 1:
             x_data.append(circleify_center(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-                        
-        if training_data_indicies[5%num_total_training_images] == 1:
+
+        if training_data_indicies[5 % num_total_training_images] == 1:
             x_data.append(circleify_center_hollow(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-            
-        if training_data_indicies[6%num_total_training_images] == 1:
+
+        if training_data_indicies[6 % num_total_training_images] == 1:
             x_data.append(triangulify_center(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-            
-        if training_data_indicies[7%num_total_training_images] == 1:
+
+        if training_data_indicies[7 % num_total_training_images] == 1:
             x_data.append(triangulify_center_hollow(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-            
+
         # row 2
-        if training_data_indicies[8%num_total_training_images] == 1:
+        if training_data_indicies[8 % num_total_training_images] == 1:
             x_data.append(boxify_top_left(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
 
-        if training_data_indicies[9%num_total_training_images] == 1:
+        if training_data_indicies[9 % num_total_training_images] == 1:
             x_data.append(boxify_bottom_right(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-            
-        if training_data_indicies[10%num_total_training_images] == 1:
+
+        if training_data_indicies[10 % num_total_training_images] == 1:
             x_data.append(lineify_top_left(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
 
-        if training_data_indicies[11%num_total_training_images] == 1:
+        if training_data_indicies[11 % num_total_training_images] == 1:
             x_data.append(lineify_bottom_right(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-            
-        if training_data_indicies[12%num_total_training_images] == 1:
+
+        if training_data_indicies[12 % num_total_training_images] == 1:
             x_data.append(circleify_top_left(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
 
-        if training_data_indicies[13%num_total_training_images] == 1:
+        if training_data_indicies[13 % num_total_training_images] == 1:
             x_data.append(circleify_bottom_right(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-            
-        if training_data_indicies[14%num_total_training_images] == 1:
+
+        if training_data_indicies[14 % num_total_training_images] == 1:
             x_data.append(triangulify_top_left(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
 
-        if training_data_indicies[15%num_total_training_images] == 1:
+        if training_data_indicies[15 % num_total_training_images] == 1:
             x_data.append(triangulify_bottom_right(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-            
+
         # row 3
-        if training_data_indicies[16%num_total_training_images] == 1:
+        if training_data_indicies[16 % num_total_training_images] == 1:
             x_data.append(noiseify())
             y_data.append(counter)
             counter = counter + 1
-            
-        if training_data_indicies[17%num_total_training_images] == 1:
+
+        if training_data_indicies[17 % num_total_training_images] == 1:
             x_data.append(noiseify_blur())
             y_data.append(counter)
             counter = counter + 1
 
-        if training_data_indicies[18%num_total_training_images] == 1:
+        if training_data_indicies[18 % num_total_training_images] == 1:
             x_data.append(house(np.copy(blank)))
             y_data.append(counter)
             counter = counter + 1
-        
+
     nb_classes = np.sum(training_data_indicies)
     print(nb_classes)
 
@@ -169,14 +166,15 @@ def preprocess(training_data_indicies):
     y_temp_2 = np_utils.to_categorical(y_temp, nb_classes)
 
     s = list(range(X_temp.shape[0]))
-    random.shuffle(s) 
+    random.shuffle(s)
     X = X_temp[s]+np.random.random(X_temp.shape)*0.01
     Y = y_temp_2[s]
-    
+
     return X, Y
 
+
 def build_and_train_model(X, Y, nb_classes, model_type, epoch):
-    """Builds and trains the neural network image classifier model. 
+    """Builds and trains the neural network image classifier model.
         Args:
             X: the dataset.
             Y: the labels.
@@ -186,12 +184,12 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
 
         Returns:
            model: the trained model.
-           input: the input layer of the model. 
+           input: the input layer of the model.
    """
-    batch_size = 4 
+    batch_size = 4
     nb_epoch = epoch
     img_rows, img_cols = 28, 28
-    WIDTH = 64*2
+    WIDTH = 64 * 2
 
     input = Input(shape=(1, img_rows, img_cols))
     nb_filters = 32
@@ -199,7 +197,7 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
     pool_size = (2, 2)
     # convolution kernel size
     kernel_size = (3, 3)
-    
+
     print(str(model_type))
     print(type(str(model_type)))
     print(len(str(model_type)))
@@ -212,8 +210,7 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
         m = Dense(nb_classes, activation='softmax')(m)
 
     if str(model_type).strip() == "CNN":
-        m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1],
-                            border_mode='valid')(input)
+        m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1], border_mode='valid')(input)
         m = Activation('relu')(m)
         m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1])(m)
         m = Activation('relu')(m)
@@ -230,14 +227,15 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
     model = Model(input=input, output=[m])
 
     model.compile(loss='categorical_crossentropy',
-                  optimizer='adadelta', #'sgd'
+                  optimizer='adadelta',
                   metrics=['accuracy'])
-    
+
     print(model.summary())
-    
-    model.fit(X,Y,batch_size=batch_size,nb_epoch=nb_epoch,validation_split=0.2,shuffle=True, verbose=2)
+
+    model.fit(X, Y, batch_size=batch_size, nb_epoch=nb_epoch, validation_split=0.2, shuffle=True, verbose=2)
     sleep(0.1)
     return model, input
+
 
 def draw_images(img_num, model, input, initial_image_indicies, step_size):
     """Performs the class activation maximization image drawing/generation process.
@@ -253,8 +251,8 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
            If failure: False.
    """
 
-    # we build a loss function 
-    loss = model.output[0,img_num]
+    # we build a loss function
+    loss = model.output[0, img_num]
     print(loss)
 
     img_width = 28
@@ -265,10 +263,10 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
 
     # normalization trick: we normalize the gradient
     grads = normalize(grads)
-    
+
     # this function returns the loss and grads given the input picture
     iterate = K.function([input, K.learning_phase()], [loss, grads])
-    
+
     # create initial image
     if initial_image_indicies[0] == 1:
         input_img_data = np.zeros([1, 1, img_width, img_height])
@@ -279,16 +277,16 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
     if initial_image_indicies[2] == 1:
         input_img_data = np.random.random((1, 1, img_width, img_height))*1.0
         print("initial image is random")
-    if initial_image_indicies[3] == 1: 
+    if initial_image_indicies[3] == 1:
         input_img_data = ndimage.gaussian_filter(np.random.random((1, 1, img_width, img_height))*1.0, 1)
         print("initial image is random blur")
 
-    temp_time = time.time()
-#     print('Time after initialization:' , temp_time - start_time)
-    
-    # we run gradient ascent    
+    # temp_time = time.time()
+    # print('Time after initialization:' , temp_time - start_time)
+
+    # we run gradient ascent
     step = step_size
-    switched_on = True # should be False for drawing VGG pictures
+    switched_on = True
     NUM_ITERS = 2
     INIT_STEP = 300
     L_PHASE = 0
@@ -296,50 +294,35 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
     nsteps = 2
     loss_value = 0.0
     idx = 0
-#     for idx in range(NUM_ITERS):
+    # for idx in range(NUM_ITERS):
     while loss_value < 0.99:
 
-        if not switched_on:        
-            image2 = scipy.misc.imresize(input_img_data[0],2.0).transpose((2,0,1))            
-            d,w,h = image2.shape
+        if not switched_on:
+            image2 = scipy.misc.imresize(input_img_data[0], 2.0).transpose((2, 0, 1))
+            d, w, h = image2.shape
             m = np.mean(image2[:, (w/2 - img_width/2):(w/2 + img_width/2),
                                   (h/2 - img_height/2):(h/2 + img_height/2)])
-            input_img_data[0] = image2[:, (w/2 - img_width/2):(w/2 + img_width/2),
-                                        (h/2 - img_height/2):(h/2 + img_height/2)]/m
+            input_img_data[0] = image2[:, (w/2 - img_width/2):(w/2 + img_width/2), (h/2 - img_height/2):(h/2 + img_height/2)]/m
 
-        for rep in range(0,INIT_STEP):
-            for j in range(1,(nsteps+1 + idx)):#/((i+1))):
+        for rep in range(0, INIT_STEP):
+            for j in range(1, (nsteps + 1 + idx)):
 
                 loss_value, grads_value = iterate([input_img_data, L_PHASE])
-
-                # temp = np.copy(grads_value[:, (img_width*(0.5-0.5*j/nsteps)):(img_width*(0.5+0.5*j/nsteps)),
-                #                               (img_height*(0.5-0.5*j/nsteps)):(img_height*(0.5+0.5*j/nsteps))])
-                # grads_value[:] = 0.0
-                # grads_value[:, img_width*(0.5-0.5*j/nsteps):img_width*(0.5+0.5*j/nsteps),
-                #                img_height*(0.5-0.5*j/nsteps):img_width*(0.5+0.5*j/nsteps)] = temp
-                
                 input_img_data += grads_value * step
 
-                if loss_value > 0.999: #+1 #for multiple
-                    # img = deprocess_image(np.copy(input_img_data[0]))
-                    img = 1-input_img_data[0,0]
+                if loss_value > 0.999:
+                    img = 1-input_img_data[0, 0]
                     loss_value, grads_value = iterate([input_img_data, L_PHASE])
-                    print('Current loss value:', loss_value,'- Current intensity:', np.mean(input_img_data))
-                    
-                    # plt.imshow(input_img_data[0,0], cmap='gray')
-                    # plt.show()
+                    print('Current loss value:', loss_value, '- Current intensity:', np.mean(input_img_data))
 
-                    return True, img   # draw an image
-            # if INIT_STEP % 300 == 0: 
-                # print(loss_value)
-            
+                    return True, img  # draw an image
         idx += idx
 
-                
     if loss_value < 0.99:
         print('Current loss value:', loss_value, '- Current intensity:', np.mean(input_img_data))
         print('Did not make it to 0.99')
-        return False    # did not draw an image
+        return False  # did not draw an image
+
 
 def compute_error(training_data_indicies, results):
     """Computes the correlation coefficient for generated images.
@@ -351,7 +334,7 @@ def compute_error(training_data_indicies, results):
            errors: correlation coefficients for each generated image.
     """
     x_data = []
-    blank = np.zeros([1,28,28])
+    blank = np.zeros([1, 28, 28])
 
     # row 1
     x_data.append(boxify_center(np.copy(blank)))
@@ -392,7 +375,8 @@ def compute_error(training_data_indicies, results):
 
     errors = np.array(np.abs(errors))
 
-    return errors[:,0], training_data_indicies_nonzero
+    return errors[:, 0], training_data_indicies_nonzero
+
 
 def save_image(data, cm, fn, dpi):
     """Saves a generated image to disk.
@@ -405,22 +389,22 @@ def save_image(data, cm, fn, dpi):
         Returns:
            None.
    """
-   
     sizes = np.shape(data)
     height = float(sizes[0])
     width = float(sizes[1])
-     
+
     fig = plt.figure()
     fig.set_size_inches(width/height, 1, forward=False)
     ax = plt.Axes(fig, [0., 0., 1., 1.])
     ax.set_axis_off()
     fig.add_axes(ax)
- 
+
     ax.matshow(data, cmap=cm)
-    plt.savefig(fn, dpi = dpi) 
+    plt.savefig(fn, dpi=dpi)
     plt.close()
 
     return None
+
 
 def model(training_data_indicies, initial_image_indicies, number_of_times_clicked, step_size, model_type, epoch):
     """Computes the correlation coefficient for generated images.
@@ -437,9 +421,6 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
            errors: correlation coefficients for each generated image.
 
     """
-    img_width = 28
-    img_height = 28
-
     num_of_pictures = np.sum(training_data_indicies)
     nb_classes = num_of_pictures
     X, Y = preprocess(training_data_indicies)
@@ -452,24 +433,22 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
     results = []
 
     while img_num < num_of_pictures:
-           
+
         start_time = time.time()
         print('START image', str(img_num))
 
         result_bool, img = draw_images(img_num, model, input, initial_image_indicies, step_size)
-                   
+
         end_time = time.time()
         print('END image', str(img_num) + ":", end_time - start_time)
 
         if result_bool == True:
             img_num += 1
 
-        save_image(1-img,'gray','static/results/' + str(number_of_times_clicked) + '_' + str(img_num) + '.png', 500)
+        save_image(1-img, 'gray', 'static/results/' + str(number_of_times_clicked) + '_' + str(img_num) + '.png', 500)
         results.append(1-img)
 
     results = np.array(results)
     errors, training_data_indicies_nonzero = compute_error(training_data_indicies, results)
 
     return results, errors, training_data_indicies_nonzero
-
-        
