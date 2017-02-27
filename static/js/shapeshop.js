@@ -20,7 +20,7 @@ training_data_shape_names = ['box',
                             'tri_br',
                             'noise',
                             'noise_blur',
-                            'house']
+                            'house'];
 
 console.log(typeof(new Date().getTime()));
 
@@ -75,7 +75,7 @@ $(function() {
             return;
         }
 
-        if (d3.sum(initial_image_indicies) == 0) {
+        if (d3.sum(initial_image_indicies) === 0) {
             alert("Choose an initial image!");
             $(document.body).css({"cursor": "default"});
             number_of_times_clicked = number_of_times_clicked - 1;
@@ -154,25 +154,24 @@ $(function() {
 	    		       .append("a").attr("class", "thumbnail thumbnail-result");
 
 	    		thumbnailEnter.append("img").attr("src", function(d, i) {
-                    return "static/results/" + String(number_of_times_clicked) + '_' + (i+1) + ".png" 
-                           + "?v=" + String(new Date().getTime()) 
+                    return "static/results/" + String(number_of_times_clicked) + '_' + (i+1) + ".png" + "?v=" + String(new Date().getTime());
                 });
                 thumbnailEnterCaption = thumbnailEnter.append("div").attr("class", "result-caption");
 
-                console.log(training_data_shape_names[training_data_indicies_nonzero[function(d, i) {return i }]]);
+                console.log(training_data_shape_names[training_data_indicies_nonzero[function(d, i) {return i; }]]);
 
                 thumbnailEnterCaption.append("div").attr('class', 'original-image')
                                      .append('img').attr('src', function(d, i){
                                         return 'static/images/' + String(training_data_shape_names[training_data_indicies_nonzero[i]]) + '.png';})
                                      .attr('width', '100%');
 
-                thumbnailEnterCaption.append("div").attr("class", "error-metric").text(function(d) { return d3.format(".2f")(d) });
+                thumbnailEnterCaption.append("div").attr("class", "error-metric").text(function(d) { return d3.format(".2f")(d); });
 
                 results.append("hr");
 
-                if (number_of_times_clicked == 1) {
+                if (number_of_times_clicked === 1) {
                     d3.select("#scroll-to-top").style("visibility", "visible");
-                };
+                }
 
     			console.log("made result row");
 
@@ -182,6 +181,6 @@ $(function() {
 
     		}
 		);
-	})
-})
+	});
+});
 
