@@ -11,18 +11,13 @@
        image: the created image.
 """
 
-from scipy.misc import imsave, imresize
+from scipy.misc import imresize
 import numpy as np
 from scipy.ndimage import imread
-from noise import snoise2
 from random import randint
 from keras import backend as K
 from scipy import ndimage
 
-
-#####
-#VGG#
-#####
 
 def preprocess_image(image_path):
     img_width = 28
@@ -53,20 +48,6 @@ def deprocess_image(x):
 def normalize(x):
     # utility function to normalize a tensor by its L2 norm
     return x / (K.sqrt(K.mean(K.square(x))) + 1e-5)
-
-def perlin_noise(size):
-    myarray = np.zeros((size, size), np.int)
-    scale = 1/48.0
-    oct = 8
-    xrep = randint(128, 16535)
-    yrep = randint(128, 16535)
-    for y in xrange(size):
-        for x in xrange(size):
-            v = snoise2(x * scale, y * scale, oct, repeatx=xrep, repeaty=yrep, persistence=.25)
-            if v < 0: v *= -1
-            v = int(v * 255.)
-            myarray[x, y] = v
-    return myarray
 
 def make_box_img(img_width, img_height):
     img = ndimage.gaussian_filter(np.random.random((1, 3, img_width, img_height))*1.0 + 1, 1)

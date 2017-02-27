@@ -15,7 +15,6 @@ Flask==0.11.1
 Keras==1.1.1  
 Tensorflow==0.12.1  
 matplotlib==1.5.1  
-noise==1.2.1
 
 For Keras, we use the Tensorflow backend. See [keras.io/backend](https://keras.io/backend/) for how to change backend.
 
