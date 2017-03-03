@@ -184,14 +184,14 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
 
         Returns:
            model: the trained model.
-           input: the input layer of the model.
+           input_layer: the input layer of the model.
    """
     batch_size = 4
     nb_epoch = epoch
     img_rows, img_cols = 28, 28
     WIDTH = 64 * 2
 
-    input = Input(shape=(1, img_rows, img_cols))
+    input_layer = Input(shape=(1, img_rows, img_cols))
     nb_filters = 32
     # size of pooling area for max pooling
     pool_size = (2, 2)
@@ -203,14 +203,14 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
     print(len(str(model_type)))
 
     if str(model_type).strip() == "MLP":
-        m = Flatten()(input)
+        m = Flatten()(input_layer)
         m = Dense(WIDTH, activation='tanh')(m)
         # m = Dropout(0.2)(m)
         m = Dense(WIDTH, activation='tanh')(m)
         m = Dense(nb_classes, activation='softmax')(m)
 
     if str(model_type).strip() == "CNN":
-        m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1], border_mode='valid')(input)
+        m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1], border_mode='valid')(input_layer)
         m = Activation('relu')(m)
         m = Convolution2D(nb_filters, kernel_size[0], kernel_size[1])(m)
         m = Activation('relu')(m)
@@ -224,7 +224,7 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
         m = Dense(nb_classes)(m)
         m = Activation('softmax')(m)
 
-    model = Model(input=input, output=[m])
+    model = Model(input=input_layer, output=[m])
 
     model.compile(loss='categorical_crossentropy',
                   optimizer='adadelta',
@@ -234,15 +234,15 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
 
     model.fit(X, Y, batch_size=batch_size, nb_epoch=nb_epoch, validation_split=0.2, shuffle=True, verbose=2)
     sleep(0.1)
-    return model, input
+    return model, input_layer
 
 
-def draw_images(img_num, model, input, initial_image_indicies, step_size):
+def draw_images(img_num, model, input_layer, initial_image_indicies, step_size):
     """Performs the class activation maximization image drawing/generation process.
         Args:
             img_num: iterator for drawing multiple images.
             model: the trained model.
-            input: the input layer of the trained model.
+            input_layer: the input layer of the trained model.
             initial_image_indicies: specifies which image to initialize the image generation process.
             step_size: the step_size used for gradient ascent.
 
@@ -259,13 +259,13 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
     img_height = 28
 
     # we compute the gradient of the input picture with respect to this loss
-    grads = K.gradients(loss, input)[0]
+    grads = K.gradients(loss, input_layer)[0]
 
     # normalization trick: we normalize the gradient
     grads = normalize(grads)
 
     # this function returns the loss and grads given the input picture
-    iterate = K.function([input, K.learning_phase()], [loss, grads])
+    iterate = K.function([input_layer, K.learning_phase()], [loss, grads])
 
     # create initial image
     if initial_image_indicies[0] == 1:
@@ -287,16 +287,13 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
     # we run gradient ascent
     step = step_size
     switched_on = True
-    NUM_ITERS = 2
-    INIT_STEP = 300
     L_PHASE = 0
-    DROPOUT_RATE = 0.5
-    nsteps = 2
     loss_value = 0.0
-    idx = 0
-    # for idx in range(NUM_ITERS):
-    while loss_value < 0.99:
 
+    # for idx in range(NUM_ITERS):
+    while loss_value <= 0.99:
+
+        # optional for zooming in when not using shapes
         if not switched_on:
             image2 = scipy.misc.imresize(input_img_data[0], 2.0).transpose((2, 0, 1))
             d, w, h = image2.shape
@@ -304,24 +301,21 @@ def draw_images(img_num, model, input, initial_image_indicies, step_size):
                                   (h/2 - img_height/2):(h/2 + img_height/2)])
             input_img_data[0] = image2[:, (w/2 - img_width/2):(w/2 + img_width/2), (h/2 - img_height/2):(h/2 + img_height/2)]/m
 
-        for rep in range(0, INIT_STEP):
-            for j in range(1, (nsteps + 1 + idx)):
-
-                loss_value, grads_value = iterate([input_img_data, L_PHASE])
-                input_img_data += grads_value * step
-
-                if loss_value > 0.999:
-                    img = 1-input_img_data[0, 0]
-                    loss_value, grads_value = iterate([input_img_data, L_PHASE])
-                    print('Current loss value:', loss_value, '- Current intensity:', np.mean(input_img_data))
-
-                    return True, img  # draw an image
-        idx += idx
-
-    if loss_value < 0.99:
+        loss_value, grads_value = iterate([input_img_data, L_PHASE])
+        input_img_data += grads_value * step
         print('Current loss value:', loss_value, '- Current intensity:', np.mean(input_img_data))
-        print('Did not make it to 0.99')
-        return False  # did not draw an image
+
+        if loss_value > 0.99:
+            img = 1-input_img_data[0, 0]
+            loss_value, grads_value = iterate([input_img_data, L_PHASE])
+            print('Current loss value:', loss_value, '- Current intensity:', np.mean(input_img_data))
+
+            return True, img  # draw an image
+
+    # if loss_value < 0.99:
+    #     print('Current loss value:', loss_value, '- Current intensity:', np.mean(input_img_data))
+    #     print('Did not make it to 0.99')
+    #     return False  # did not draw an image
 
 
 def compute_error(training_data_indicies, results):
@@ -427,7 +421,7 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
     print(X.shape)
     print(Y.shape)
 
-    model, input = build_and_train_model(X, Y, nb_classes, model_type, epoch)
+    model, input_layer = build_and_train_model(X, Y, nb_classes, model_type, epoch)
 
     img_num = 0
     results = []
@@ -437,7 +431,7 @@ def model(training_data_indicies, initial_image_indicies, number_of_times_clicke
         start_time = time.time()
         print('START image', str(img_num))
 
-        result_bool, img = draw_images(img_num, model, input, initial_image_indicies, step_size)
+        result_bool, img = draw_images(img_num, model, input_layer, initial_image_indicies, step_size)
 
         end_time = time.time()
         print('END image', str(img_num) + ":", end_time - start_time)
