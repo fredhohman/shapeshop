@@ -8,29 +8,20 @@ from __future__ import print_function
 import numpy as np
 import time
 from time import sleep
-import os
 import random
 
 from keras import backend as K
 from keras.utils import np_utils
 from keras.models import Model
-from keras.layers import *
+from keras.layers import Input, Flatten, Dense, Convolution2D, Activation, MaxPooling2D, Dropout
 
 import scipy
 from scipy import ndimage
 from scipy.stats import pearsonr
 
-from helper import boxify_top_left, boxify_bottom_right
-from helper import lineify_top_left, lineify_bottom_right
-from helper import circleify_top_left, circleify_bottom_right
-from helper import triangulify_top_left, triangulify_bottom_right
-from helper import boxify_center, lineify_center, circleify_center, triangulify_center
-from helper import boxify_center_hollow, lineify_center_horizontal, circleify_center_hollow, triangulify_center_hollow
-from helper import noiseify, noiseify_blur
-from helper import house
-from helper import normalize
-
 import matplotlib.pyplot as plt
+
+from helper import *
 
 
 def preprocess(training_data_indicies):
@@ -150,10 +141,10 @@ def preprocess(training_data_indicies):
             y_data.append(counter)
             counter = counter + 1
 
-        if training_data_indicies[18 % num_total_training_images] == 1:
-            x_data.append(house(np.copy(blank)))
-            y_data.append(counter)
-            counter = counter + 1
+        # if training_data_indicies[18 % num_total_training_images] == 1:
+        #     x_data.append(house(np.copy(blank)))
+        #     y_data.append(counter)
+        #     counter = counter + 1
 
     nb_classes = np.sum(training_data_indicies)
     print(nb_classes)
@@ -205,7 +196,6 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
     if str(model_type).strip() == "MLP":
         m = Flatten()(input_layer)
         m = Dense(WIDTH, activation='tanh')(m)
-        # m = Dropout(0.2)(m)
         m = Dense(WIDTH, activation='tanh')(m)
         m = Dense(nb_classes, activation='softmax')(m)
 
@@ -216,7 +206,6 @@ def build_and_train_model(X, Y, nb_classes, model_type, epoch):
         m = Activation('relu')(m)
         m = MaxPooling2D(pool_size=pool_size)(m)
         m = Dropout(0.25)(m)
-
         m = Flatten()(m)
         m = Dense(128)(m)
         m = Activation('relu')(m)
@@ -293,7 +282,7 @@ def draw_images(img_num, model, input_layer, initial_image_indicies, step_size):
     # for idx in range(NUM_ITERS):
     while loss_value <= 0.99:
 
-        # optional for zooming in when not using shapes
+        # optional for zooming in when not using shapes, off by default
         if not switched_on:
             image2 = scipy.misc.imresize(input_img_data[0], 2.0).transpose((2, 0, 1))
             d, w, h = image2.shape
@@ -312,6 +301,7 @@ def draw_images(img_num, model, input_layer, initial_image_indicies, step_size):
 
             return True, img  # draw an image
 
+    # for debugging
     # if loss_value < 0.99:
     #     print('Current loss value:', loss_value, '- Current intensity:', np.mean(input_img_data))
     #     print('Did not make it to 0.99')
@@ -327,6 +317,7 @@ def compute_error(training_data_indicies, results):
         Returns:
            errors: correlation coefficients for each generated image.
     """
+
     x_data = []
     blank = np.zeros([1, 28, 28])
 
@@ -351,7 +342,7 @@ def compute_error(training_data_indicies, results):
     # row 3
     x_data.append(noiseify())
     x_data.append(noiseify_blur())
-    x_data.append(house(np.copy(blank)))
+    # x_data.append(house(np.copy(blank)))
 
     training_data_indicies_nonzero = np.nonzero(training_data_indicies)[0]
     errors = []
