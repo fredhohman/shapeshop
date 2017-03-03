@@ -16,12 +16,12 @@ def index():
 def run():
     if request.method == 'POST':
         training_data_indicies = json.loads(request.data.decode('utf-8'))["training_data_indicies"]
-        print(training_data_indicies)
-        print(type(training_data_indicies))
+        # print(training_data_indicies)
+        # print(type(training_data_indicies))
 
         initial_image_indicies = json.loads(request.data.decode('utf-8'))["initial_image_indicies"]
-        print(initial_image_indicies)
-        print(type(initial_image_indicies))
+        # print(initial_image_indicies)
+        # print(type(initial_image_indicies))
 
         number_of_times_clicked = json.loads(request.data.decode('utf-8'))["number_of_times_clicked"]
         step_size = json.loads(request.data.decode('utf-8'))["step_size"]
