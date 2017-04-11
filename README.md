@@ -50,8 +50,8 @@ ShapeShop uses the class activation maximization visualization technique to maxi
 
 ## Citation
 
-**ShapeShop: Towards Understanding Deep Learning Representations via Interactive Experimentation.**
-Fred Hohman, Nathan Hodas, Duen Horng Chau. 
+**ShapeShop: Towards Understanding Deep Learning Representations via Interactive Experimentation.**  
+Fred Hohman, Nathan Hodas, Duen Horng Chau.  
 *Extended Abstracts, ACM Conference on Human Factors in Computing Systems (CHI). May 6-11, 2017. Denver, CO, USA.*
 
 ```
