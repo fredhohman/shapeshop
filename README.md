@@ -74,7 +74,7 @@ Fred Hohman, Nathan Hodas, Duen Horng Chau.
 *Extended Abstracts, ACM Conference on Human Factors in Computing Systems (CHI). May 6-11, 2017. Denver, CO, USA.*
 
 [Read the paper][paper].  
-[View the poster][poster].
+[View the poster][poster].  
 [Watch the teaser][teaser].
 
 ## License
