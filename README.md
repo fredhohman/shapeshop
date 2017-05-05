@@ -75,6 +75,7 @@ Fred Hohman, Nathan Hodas, Duen Horng Chau.
 
 [Read the paper][paper].  
 [View the poster][poster].
+[Watch the teaser][teaser].
 
 ## License
 
@@ -88,4 +89,5 @@ For questions and support contact [Fred Hohman][fred].
 [keras-backend]: https://keras.io/backend/
 [paper]: http://www.cc.gatech.edu/~dchau/papers/17-chi-shapeshop.pdf
 [poster]: http://fredhohman.com/assets/shapeshop-poster.pdf
+[teaser]: https://youtu.be/XL3fFwZ1DDQ
 [fred]: http://www.fredhohman.com
