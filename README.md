@@ -3,6 +3,12 @@
 
 The Shape Workshop (**ShapeShop**) is an interactive system for visualizing and understanding what representations a neural network model has learned in images consisting of simple shapes. It encourages model building, experimentation, and comparison to helps users explore the robustness of image classifiers. 
 
+[Read the paper][paper].  
+[View the poster][poster].  
+[Watch the teaser][teaser-acm].
+
+***
+
 ![UI](images/github-ui-fig.png)
 
 ## Installation
