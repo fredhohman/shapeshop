@@ -73,8 +73,8 @@ ShapeShop uses the class activation maximization visualization technique to maxi
 Fred Hohman, Nathan Hodas, Duen Horng Chau.  
 *Extended Abstracts, ACM Conference on Human Factors in Computing Systems (CHI). May 6-11, 2017. Denver, CO, USA.*
 
-[Read the paper.][paper]  
-[View the poster.][poster]
+[Read the paper][paper].  
+[View the poster][poster].
 
 ## License
 
