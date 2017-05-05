@@ -5,26 +5,45 @@ The Shape Workshop (**ShapeShop**) is an interactive system for visualizing and 
 
 ![UI](images/github-ui-fig.png)
 
-## Requirements 
+## Installation
 
-### Python (3.5)
+We suggest creating a new environment to run ShapeShop. If you are using [Anaconda][anaconda], create a new environment called `shapeshop` by running
+
+```bash
+conda create --name shapeshop python=3
+```
+
+Switch to this environment by running
+
+```bash
+source activate shapeshop
+```
+
+### Requirements: Python (3.5)
+
+From within the new environment install the following packages with the versions listed below:
 
 numpy==1.11.3  
 scipy==0.18.1  
-Flask==0.11.1  
-Keras==1.2.0  
-Tensorflow==0.12.1  
+flask==0.11.1  
+keras==1.2.0  
+tensorflow==0.12.1  
 matplotlib==2.0.0  
+Pillow==4.1.1  
 
-For Keras, use the backend provided in `keras.json`. See [keras.io/backend](https://keras.io/backend/) for how to change backend.
+For Keras, use our backend provided in `keras.json`. Your `shapeshop` environment's `keras.json` backend is located `$HOME/.keras/keras.json`. See [keras.io/backend][keras-backend] for more details.
 
-### JavaScript
-D3 4.0 (loaded via web)  
-jQuery 1.12.4 (loaded via web)
+### Requirements: JavaScript
+D3 4.0 (loaded via web, no installation needed)  
+jQuery 1.12.4 (loaded via web, no installation needed)
 
-## Installation 
+## Download or Clone
 
 Once the requirements have been met, simply download or clone the repository. 
+
+```bash
+git clone https://github.com/fredhohman/shapeshop.git
+```
 
 ## Usage
 
@@ -35,7 +54,7 @@ Run the system by
 
 python server.py
 ```
-and pointing your browser to `http://localhost:5000`.
+from the `shapeshop/` directory and pointing your browser to `http://localhost:5000`.
 
 ### Using ShapeShop
 
@@ -50,9 +69,12 @@ ShapeShop uses the class activation maximization visualization technique to maxi
 
 ## Citation
 
-```
+**ShapeShop: Towards Understanding Deep Learning Representations via Interactive Experimentation.**  
+Fred Hohman, Nathan Hodas, Duen Horng Chau.  
+*Extended Abstracts, ACM Conference on Human Factors in Computing Systems (CHI). May 6-11, 2017. Denver, CO, USA.*
 
-```
+[Read the paper.][paper]  
+[View the poster.][poster]
 
 ## License
 
@@ -60,4 +82,10 @@ MIT License. See [`LICENSE.md`](LICENSE.md).
 
 ## Credits 
 
-For questions and support contact [Fred Hohman](http://www.fredhohman.com).
+For questions and support contact [Fred Hohman][fred].
+
+[anaconda]: https://www.continuum.io/downloads
+[keras-backend]: https://keras.io/backend/
+[paper]: http://www.cc.gatech.edu/~dchau/papers/17-chi-shapeshop.pdf
+[poster]: http://fredhohman.com/assets/shapeshop-poster.pdf
+[fred]: http://www.fredhohman.com
